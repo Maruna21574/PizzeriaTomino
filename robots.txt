@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /includes/
+Disallow: /data/
+Disallow: /orders/
+Disallow: /process_order.php
+Disallow: /process_contact.php
+
+Sitemap: https://www.pizzeriatominno.sk/sitemap.xml

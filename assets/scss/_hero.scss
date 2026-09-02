@@ -1,0 +1,116 @@
+.hero {
+  position: relative;
+  color: $color-white;
+  overflow: hidden;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.04);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(36, 26, 21, 0.75) 0%, rgba(36, 26, 21, 0.55) 45%, rgba(36, 26, 21, 0.92) 100%);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  h1 {
+    color: $color-white;
+    margin-bottom: 0.4em;
+
+    span {
+      color: $color-secondary;
+    }
+  }
+
+  &__lead {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 560px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 28px 0 32px;
+  }
+
+  &__badges {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.85);
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+
+  .eyebrow {
+    color: $color-secondary;
+  }
+}
+
+.page-hero {
+  position: relative;
+  padding: 80px 0 56px;
+  color: $color-white;
+  background: linear-gradient(120deg, $color-dark 0%, $color-primary-dark 130%);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.28;
+    mix-blend-mode: overlay;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  h1 {
+    color: $color-white;
+    margin-bottom: 0.3em;
+  }
+
+  &__lead {
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+
+  .eyebrow {
+    color: $color-secondary;
+  }
+
+  &--menu::after { background-image: url('https://images.unsplash.com/photo-1600028068383-ea11a7a101f3?auto=format&fit=crop&w=1600&q=80'); }
+  &--about::after { background-image: url('https://images.unsplash.com/photo-1595295333158-4742f28fbd85?auto=format&fit=crop&w=1600&q=80'); }
+  &--gallery::after { background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80'); }
+  &--delivery::after { background-image: url('https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=1600&q=80'); }
+  &--contact::after { background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80'); }
+  &--order::after { background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&q=80'); }
+  &--builder::after { background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1600&q=80'); }
+}

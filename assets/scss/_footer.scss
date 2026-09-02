@@ -1,0 +1,93 @@
+.site-footer {
+  background: $color-dark;
+  color: rgba(255, 255, 255, 0.75);
+  padding-top: 60px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 36px;
+  padding-bottom: 40px;
+
+  @include respond($bp-lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include respond($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+
+  h3 {
+    color: $color-white;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.9rem;
+  }
+}
+
+.footer-social {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    &:hover { color: $color-secondary; }
+  }
+}
+
+.footer-links li,
+.footer-contact li {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+  color: $color-secondary;
+}
+
+.footer-hours li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.65);
+
+  span:first-child {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.footer-hours--card {
+  li {
+    color: $color-muted;
+    span:first-child { color: $color-text; font-weight: 600; }
+  }
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 0;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.8rem;
+
+    p {
+      margin: 0;
+      color: $color-white;
+    }
+  }
+}

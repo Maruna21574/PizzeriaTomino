@@ -1,0 +1,289 @@
+.topbar {
+  background: $color-dark;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.82rem;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 8px 20px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  a.topbar__item:hover {
+    color: $color-secondary;
+  }
+
+  @include respond($bp-md) {
+    &__item--address { display: none; }
+  }
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  // Poznámka: zámerne bez backdrop-filter - tá vytvára nový "containing block"
+  // pre position:fixed potomkov (mobilné menu), čím by ho obmedzila len na
+  // výšku hlavičky namiesto celej obrazovky.
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid transparent;
+  transition: box-shadow $transition-base, border-color $transition-base;
+
+  &--scrolled {
+    box-shadow: $shadow-sm;
+    border-bottom-color: $color-border;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 20px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  &__img {
+    display: block;
+    height: 42px;
+    width: auto;
+  }
+
+  &--footer .logo__img {
+    height: 46px;
+  }
+}
+
+.main-nav {
+  // "> ul" (nie len "ul") - inak by tento selektor (vyššej špecifickosti
+  // ako .nav-dropdown__menu) omylom prebil aj štýly vnorenej <ul> dropdownu.
+  > ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  a {
+    display: inline-block;
+    font-family: $font-heading;
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: $color-dark-soft;
+    padding: 6px 2px;
+    border-bottom: 2px solid transparent;
+    transition: color $transition-base, border-color $transition-base;
+
+    &:hover, &.active {
+      color: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown__toggle {
+  @include btn-reset;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: $font-heading;
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: $color-dark-soft;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: color $transition-base, border-color $transition-base;
+
+  &:hover,
+  &.active,
+  .nav-dropdown--open & {
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.nav-dropdown__chevron {
+  transition: transform $transition-base;
+
+  .nav-dropdown--open & {
+    transform: rotate(180deg);
+  }
+}
+
+.nav-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translate(-50%, 6px);
+  min-width: 190px;
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-md;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity $transition-base, transform $transition-base, visibility $transition-base;
+  z-index: 10;
+
+  a {
+    display: block;
+    padding: 9px 12px;
+    border-radius: $radius-sm;
+    border-bottom: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+
+    &:hover, &.active {
+      background: $color-cream-alt;
+      color: $color-primary;
+    }
+  }
+
+  .nav-dropdown--open & {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-white;
+  cursor: pointer;
+
+  span {
+    display: block;
+    height: 2px;
+    width: 20px;
+    margin: 0 auto;
+    background: $color-dark;
+    transition: transform $transition-base, opacity $transition-base;
+  }
+
+  &--open {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+}
+
+.btn--order-now {
+  @include respond($bp-md) {
+    display: none;
+  }
+}
+
+@include respond($bp-lg) {
+  .main-nav {
+    position: fixed;
+    inset: 0 0 0 30%;
+    top: 0;
+    z-index: 20;
+    background: $color-white;
+    padding: 100px 28px 28px;
+    transform: translateX(100%);
+    transition: transform $transition-base;
+    box-shadow: $shadow-lg;
+
+    > ul {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    a {
+      display: block;
+      padding: 12px 6px;
+      font-size: 1.1rem;
+    }
+
+    &--open {
+      transform: translateX(0);
+    }
+  }
+
+  .nav-toggle {
+    display: flex;
+    position: relative;
+    z-index: 21;
+  }
+
+  // Tlačidlo košíka v mobilnej hlavičke je zbytočné - keď má košík
+  // položky, zobrazí sa plávajúci mini-košík (pozri _mini-cart.scss).
+  // Selektor musí byť "site-header__actions .btn--cart" (nie len
+  // ".btn--cart") - inak má rovnakú špecifickosť ako základné ".btn"
+  // pravidlo z _buttons.scss, ktoré sa importuje neskôr a vyhráva.
+  .site-header__actions .btn--cart {
+    display: none;
+  }
+
+  .nav-dropdown__toggle {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 6px;
+    font-size: 1.1rem;
+  }
+
+  .nav-dropdown__menu {
+    position: static;
+    transform: none;
+    min-width: 0;
+    box-shadow: none;
+    border: none;
+    padding: 0 0 0 14px;
+    display: none;
+
+    a {
+      padding: 10px 6px;
+      font-size: 1rem;
+    }
+  }
+
+  .nav-dropdown--open .nav-dropdown__menu {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@include respond($bp-sm) {
+  .main-nav {
+    inset: 0;
+  }
+}

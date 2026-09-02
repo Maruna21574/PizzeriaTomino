@@ -1,0 +1,89 @@
+// Základný systém SVG ikon (nahrádza emoji naprieč webom)
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  vertical-align: -3px;
+  color: currentColor;
+}
+
+.icon--sm {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+}
+
+// Sprite s definíciami prísad pre pizza builder - nesmie byť vidno, len sa naň odkazuje <use>
+.sprite-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+// Farebné ilustračné ikony prísad (chip aj rozhodené na pizzi)
+.topping-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+// Kontextové veľkosti/farby ikon v jednotlivých komponentoch
+.usp__icon .icon {
+  width: 26px;
+  height: 26px;
+  color: $color-primary;
+  vertical-align: 0;
+}
+
+.info-card__icon .icon {
+  width: 30px;
+  height: 30px;
+  color: $color-primary;
+  vertical-align: 0;
+}
+
+.btn__icon .icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+}
+
+.payment-option__icon .icon {
+  width: 24px;
+  height: 24px;
+  color: $color-primary;
+  vertical-align: 0;
+}
+
+.thanks-icon .icon {
+  width: 60px;
+  height: 60px;
+  color: $color-success;
+  vertical-align: 0;
+}
+
+.call-fab .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.contact-info__item > span .icon {
+  width: 22px;
+  height: 22px;
+  color: $color-primary;
+  vertical-align: 0;
+}
+
+.order-summary__meta .icon,
+.footer-contact .icon,
+.topbar .icon,
+.hero__badges .icon {
+  color: inherit;
+}
+
+.topping-chip__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
