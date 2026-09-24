@@ -62,11 +62,6 @@ $currentScript = $_SERVER['SCRIPT_NAME'] ?? 'index.php';
     <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="topbar__item"><?= icon('phone', 'icon icon--sm') ?> <?= e(SITE_PHONE) ?></a>
     <span class="topbar__item topbar__item--address"><?= icon('pin', 'icon icon--sm') ?> <?= e(SITE_ADDRESS_FULL) ?></span>
     <span class="topbar__item topbar__item--hours"><?php if (isOpenNow()): ?><span class="dot dot--open"></span><?= h('Otvorené teraz · %s', e(formatHours(hoursForDay((int) date('N'))))) ?><?php else: ?><span class="dot dot--closed"></span><?= h('Zatvorené · Otvárame %s', e(nextOpeningLabel())) ?><?php endif; ?></span>
-    <nav class="lang-switch" aria-label="<?= h('Jazyk') ?>">
-      <?php foreach (LANGUAGES as $code => $label): ?>
-      <a href="<?= e(pageUrl($currentScript, $code)) ?>" hreflang="<?= e($code) ?>" lang="<?= e($code) ?>" title="<?= e($label) ?>"<?= $code === lang() ? ' class="active" aria-current="true"' : '' ?>><?= e(strtoupper($code)) ?></a>
-      <?php endforeach; ?>
-    </nav>
   </div>
 </div>
 
@@ -97,6 +92,11 @@ $currentScript = $_SERVER['SCRIPT_NAME'] ?? 'index.php';
     </nav>
 
     <div class="site-header__actions">
+      <nav class="lang-switch" aria-label="<?= h('Jazyk') ?>">
+        <?php foreach (LANGUAGES as $code => $label): ?>
+        <a href="<?= e(pageUrl($currentScript, $code)) ?>" hreflang="<?= e($code) ?>" lang="<?= e($code) ?>" title="<?= e($label) ?>"<?= $code === lang() ? ' class="active" aria-current="true"' : '' ?>><?= e(strtoupper($code)) ?></a>
+        <?php endforeach; ?>
+      </nav>
       <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="btn btn--primary btn--header-call"><?= icon('phone', 'icon icon--sm') ?> <?= e(SITE_PHONE) ?></a>
       <button class="nav-toggle" id="navToggle" aria-label="<?= h('Otvoriť menu') ?>" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>

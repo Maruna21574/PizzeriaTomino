@@ -464,23 +464,27 @@
   justify-content: center;
 }
 
-// Prepínač jazyka v hornej lište
+// Prepínač jazyka v hlavičke (SK | HU)
 .lang-switch {
   display: flex;
-  gap: 2px;
-  padding-left: 14px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3px;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background: $color-white;
 
   a {
-    padding: 2px 7px;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: $radius-pill;
+    font-family: $font-heading;
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     letter-spacing: 0.04em;
-    color: rgba(255, 255, 255, 0.7);
+    line-height: 1;
+    color: $color-muted;
+    transition: color $transition-base, background $transition-base;
 
     &:hover {
-      color: $color-white;
+      color: $color-primary;
     }
 
     &.active {
