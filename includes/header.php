@@ -15,6 +15,10 @@ $pageTitle = t($pageTitle ?? SITE_NAME);
 $pageDescription = t($pageDescription ?? 'Neapolská pizza pečená v peci na drevo z talianskej múky a cesta fermentovaného 48 hodín. Rozvoz Novosad, Trebišov a okolie - objednávky telefonicky, platba hotovosťou alebo kartou.');
 $bodyClass = $bodyClass ?? '';
 $currentScript = $_SERVER['SCRIPT_NAME'] ?? 'index.php';
+
+if (SITE_NOINDEX && !headers_sent()) {
+    header('X-Robots-Tag: noindex, nofollow'); // testovacia verzia webu
+}
 ?><!DOCTYPE html>
 <html lang="<?= e(lang()) ?>">
 <head>
@@ -23,14 +27,14 @@ $currentScript = $_SERVER['SCRIPT_NAME'] ?? 'index.php';
 <title><?= e($pageTitle) ?> | <?= e(SITE_NAME) ?></title>
 <meta name="description" content="<?= e($pageDescription) ?>">
 <meta name="theme-color" content="#c1272d">
-<?php if (empty($noIndex)): ?>
+<?php if (empty($noIndex) && !SITE_NOINDEX): ?>
 <link rel="canonical" href="<?= e(canonicalUrl()) ?>">
 <?php foreach (LANGUAGES as $code => $label): ?>
 <link rel="alternate" hreflang="<?= e($code) ?>" href="<?= e(canonicalUrl($code)) ?>">
 <?php endforeach; ?>
 <link rel="alternate" hreflang="x-default" href="<?= e(canonicalUrl('sk')) ?>">
 <?php else: ?>
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex, nofollow">
 <?php endif; ?>
 
 <meta property="og:type" content="website">

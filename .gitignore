@@ -9,3 +9,6 @@ assets/img/menu/
 assets/img/pec_video/
 assets/img/potraviny/
 assets/img/auto.jpg
+
+# Konfigurácia konkrétneho servera (vzor: includes/config.local.example.php)
+includes/config.local.php

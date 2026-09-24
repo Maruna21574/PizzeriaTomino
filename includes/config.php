@@ -13,10 +13,19 @@ date_default_timezone_set('Europe/Bratislava');
 define('SITE_NAME', 'Pizzeria Tominno');
 define('SITE_CLAIM', 'Neapolská pizza pečená v peci na drevo - z talianskej múky a cesta fermentovaného 48 hodín.');
 
+// Nastavenia konkrétneho servera (napr. testovacia subdoména) - súbor
+// includes/config.local.php nie je v gite, vzor je v config.local.example.php.
+if (is_file(__DIR__ . '/config.local.php')) {
+    require __DIR__ . '/config.local.php';
+}
+
 // Oficiálna adresa webu - používa sa v kanonických odkazoch, pri zdieľaní
 // a v štruktúrovaných dátach pre Google. Nepreberá sa z hlavičky Host.
-define('SITE_URL', 'https://www.pizzeriatominno.sk');
-define('SITE_DOMAIN', 'pizzeriatominno.sk');
+defined('SITE_URL') || define('SITE_URL', 'https://www.pizzeriatominno.sk');
+// Doména odosielateľa e-mailov z formulárov (noreply@...).
+defined('SITE_DOMAIN') || define('SITE_DOMAIN', 'pizzeriatominno.sk');
+// true = web sa neindexuje vo vyhľadávačoch (testovacia verzia).
+defined('SITE_NOINDEX') || define('SITE_NOINDEX', false);
 
 // Počiatočné heslo do administrácie (bcrypt hash). Po prvom prihlásení ho
 // klient zmení v administrácii - nové heslo sa uloží do storage/admin.json.
