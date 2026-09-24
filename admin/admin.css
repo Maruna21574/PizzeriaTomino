@@ -1,0 +1,492 @@
+/* Administrácia Pizzeria Tominno - samostatné štýly (nezávislé od webu). */
+
+:root {
+  --red: #c1272d;
+  --red-dark: #8f1a1f;
+  --gold: #e3a018;
+  --dark: #241a15;
+  --text: #2b211d;
+  --muted: #7a6c63;
+  --border: #e6dbd0;
+  --bg: #f6f1ec;
+  --white: #fff;
+  --success: #2f9e44;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body.admin {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+}
+
+a { color: var(--red); }
+h1 { font-size: 1.6rem; margin: 0 0 8px; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+
+.icon { width: 18px; height: 18px; vertical-align: -3px; flex-shrink: 0; }
+.icon--sm { width: 16px; height: 16px; }
+
+/* Hlavička */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 20px;
+  background: var(--dark);
+  color: var(--white);
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.admin-brand img { height: 30px; }
+.admin-brand span { font-size: 0.8rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.admin-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.admin-nav a,
+.admin-nav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font: inherit;
+  font-size: 0.9rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.admin-nav a:hover,
+.admin-nav button:hover { background: rgba(255, 255, 255, 0.1); color: var(--white); }
+.admin-nav a.active { background: var(--red); color: var(--white); }
+.admin-nav__logout { margin: 0; }
+
+.admin-nav-toggle {
+  display: none;
+  margin-left: auto;
+  background: none;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.admin-nav-toggle span { display: block; width: 22px; height: 2px; margin: 4px 0; background: var(--white); }
+
+@media (max-width: 900px) {
+  .admin-nav-toggle { display: block; }
+  .admin-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+    background: var(--dark);
+  }
+  body.nav-open .admin-nav { display: flex; }
+}
+
+/* Obsah */
+.admin-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 26px 20px 80px;
+}
+
+.admin-lead { color: var(--muted); margin: 0 0 18px; max-width: 760px; }
+.admin-muted { color: var(--muted); font-size: 0.85rem; font-weight: normal; }
+.admin-narrow { max-width: 480px; }
+
+.admin-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.admin-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 18px;
+  scroll-margin-top: 80px;
+}
+
+/* Hlásenia */
+.admin-alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  border: 1px solid transparent;
+}
+
+.admin-alert--success { background: #ebfbee; border-color: #b2f2bb; color: #1b5e2b; }
+.admin-alert--error { background: #fff0f0; border-color: #ffc9c9; color: #a61e1e; }
+.admin-alert--warning { background: #fff9db; border-color: #ffe066; color: #664d03; }
+
+/* Tlačidlá */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.admin-btn:hover { border-color: var(--red); color: var(--red); }
+.admin-btn--primary { background: var(--red); border-color: var(--red); color: var(--white); }
+.admin-btn--primary:hover { background: var(--red-dark); border-color: var(--red-dark); color: var(--white); }
+.admin-btn--ghost { background: transparent; border-style: dashed; }
+.admin-btn--danger:hover { background: #fff0f0; border-color: #e03131; color: #c92a2a; }
+.admin-btn--sm { padding: 6px 10px; font-size: 0.85rem; }
+.admin-btn--block { width: 100%; }
+.admin-btn.icon-only { padding: 6px 8px; }
+
+.admin-default-submit { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.admin-actions { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+.admin-savebar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 0;
+  background: linear-gradient(0deg, var(--bg) 70%, transparent);
+}
+
+.admin-savebar--inline { position: static; background: none; padding: 10px 0 0; }
+
+/* Formuláre */
+.admin-field { margin-bottom: 14px; }
+.admin-field label,
+.admin-label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 5px; }
+
+.admin input[type="text"],
+.admin input[type="email"],
+.admin input[type="tel"],
+.admin input[type="url"],
+.admin input[type="number"],
+.admin input[type="password"],
+.admin input[type="time"],
+.admin select,
+.admin textarea {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font: inherit;
+  background: var(--white);
+  color: var(--text);
+}
+
+.admin input:focus,
+.admin select:focus,
+.admin textarea:focus { outline: 2px solid rgba(193, 39, 45, 0.25); border-color: var(--red); }
+
+.admin textarea { resize: vertical; }
+.admin input[type="file"] { font: inherit; font-size: 0.9rem; max-width: 100%; }
+
+.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.admin-grid--3 { grid-template-columns: repeat(3, 1fr); align-items: end; }
+
+@media (max-width: 720px) {
+  .admin-grid,
+  .admin-grid--3 { grid-template-columns: 1fr; }
+}
+
+.admin-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  cursor: pointer;
+  font-weight: normal !important;
+}
+
+.admin-check input { width: 17px; height: 17px; accent-color: var(--red); flex-shrink: 0; }
+.admin-check--inline { margin-bottom: 20px; }
+
+.admin-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 20px; }
+
+@media (max-width: 720px) {
+  .admin-checks { grid-template-columns: 1fr; }
+}
+
+.admin-details summary { cursor: pointer; font-weight: 600; margin-bottom: 8px; }
+
+.admin-icon-choice { display: flex; flex-wrap: wrap; gap: 8px; }
+.admin-icon-choice input { position: absolute; opacity: 0; }
+.admin-icon-choice span {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.admin-icon-choice input:checked + span { border-color: var(--red); background: #fdecec; color: var(--red); }
+.admin-icon-choice input:focus-visible + span { outline: 2px solid var(--red); }
+
+.admin-hours { border-collapse: collapse; margin-bottom: 16px; }
+.admin-hours th { text-align: left; padding: 5px 14px 5px 0; font-weight: 600; }
+.admin-hours td { padding: 5px 6px; }
+.admin-hours input[type="time"] { width: 120px; }
+
+/* Fotky */
+.admin-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 7px;
+  background: #eee4da;
+  flex-shrink: 0;
+}
+
+.admin-thumb--empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.1;
+}
+
+.admin-thumb--wide { width: 110px; }
+.admin-thumb--lg { width: 160px; height: 160px; }
+.admin-thumb--lg.admin-thumb--wide { width: 240px; height: 140px; }
+
+.admin-photo-field { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+
+.admin-preview { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.admin-preview img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 2px solid var(--gold); }
+
+/* Prehľad */
+.admin-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.admin-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.admin-tile:hover { border-color: var(--red); transform: translateY(-2px); }
+.admin-tile strong { font-size: 1.08rem; }
+.admin-tile__icon { color: var(--red); }
+.admin-tile__icon .icon { width: 28px; height: 28px; }
+.admin-tile__stat { font-weight: 600; color: var(--red); }
+
+/* Jedálny lístok */
+.admin-menu-cat.is-hidden { opacity: 0.6; }
+
+.admin-menu-cat__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-menu-cat__title { flex: 1; min-width: 160px; }
+.admin-menu-cat__title h2 { margin: 0; }
+
+.admin-menu-items { list-style: none; margin: 0 0 14px; padding: 0; }
+
+.admin-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  scroll-margin-top: 80px;
+}
+
+.admin-menu-item.is-hidden .admin-menu-item__main { opacity: 0.5; }
+
+.admin-menu-item__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.admin-menu-item__main:hover { background: #fdf7f0; }
+.admin-menu-item__main .admin-thumb { width: 48px; height: 48px; }
+
+.admin-menu-item__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-menu-item__text .admin-muted {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-menu-item__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-weight: 700;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+.admin-menu-item__price small { color: var(--muted); font-weight: normal; }
+
+.admin-badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #e9ecef;
+  color: #495057;
+  font-size: 0.72rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.admin-badge--gold { background: #fff3bf; color: #8a6100; }
+
+@media (max-width: 640px) {
+  .admin-menu-item { flex-wrap: wrap; }
+  .admin-menu-item__main .admin-muted { display: none; }
+}
+
+/* Galéria */
+.admin-gallery-section__head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.admin-gallery-section__head .admin-grid { flex: 1; min-width: 280px; }
+
+.admin-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 8px 0 16px;
+}
+
+.admin-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fdfaf7;
+}
+
+.admin-photo__img { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; display: block; }
+.admin-photo input[type="text"] { padding: 6px 8px; font-size: 0.85rem; }
+
+.admin-photo__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 6px;
+  font-size: 0.85rem;
+}
+
+.admin-photo__bar .admin-check { margin: 0; white-space: nowrap; }
+.admin-photo__bar .admin-actions { flex-wrap: nowrap; gap: 4px; }
+
+.admin-upload {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 0 14px;
+  padding: 14px;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  background: #fffdfa;
+}
+
+@media (max-width: 720px) {
+  .admin-upload { grid-template-columns: 1fr; }
+}
+
+/* Prihlásenie */
+.admin-login {
+  max-width: 380px;
+  margin: 8vh auto 0;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.admin-login__logo { height: 50px; margin-bottom: 12px; }
+.admin-login form { text-align: left; margin-top: 14px; }
+.admin-login label { display: block; font-weight: 600; margin-bottom: 6px; }
+.admin-login input { margin-bottom: 14px; }

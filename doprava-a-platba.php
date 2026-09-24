@@ -11,7 +11,7 @@ $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>'
   <div class="container">
     <p class="eyebrow"><?= h('Rozvoz a platba') ?></p>
     <h1><?= h('Dovezieme vám ju domov') ?></h1>
-    <p class="page-hero__lead"><?= h('Rozvoz po obciach %s. Objednávky prijímame telefonicky, platíte hotovosťou alebo kartou.', h(DELIVERY_AREA)) ?></p>
+    <p class="page-hero__lead"><?= h('Rozvoz po obciach %s. Objednávky prijímame telefonicky, platíte hotovosťou alebo kartou.', e(deliveryArea())) ?></p>
   </div>
 </section>
 
@@ -32,7 +32,7 @@ $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>'
     <div class="info-card">
       <span class="info-card__icon"><?= icon('truck') ?></span>
       <h2><?= h('Kam rozvážame') ?></h2>
-      <p><?= h('Rozvážame vlastným autom do oblasti: %s.', '<strong>' . h(DELIVERY_AREA) . '</strong>') ?></p>
+      <p><?= h('Rozvážame vlastným autom do oblasti: %s.', '<strong>' . e(deliveryArea()) . '</strong>') ?></p>
       <ul class="check-list">
         <li><?= h('Minimálna hodnota objednávky: %s', '<strong>' . formatPrice(DELIVERY_MIN_ORDER) . '</strong>') ?></li>
         <li><?= h('Poplatok za dopravu: %s', '<strong>' . formatPrice(DELIVERY_FEE) . '</strong>') ?></li>

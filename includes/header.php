@@ -104,3 +104,8 @@ $currentScript = $_SERVER['SCRIPT_NAME'] ?? 'index.php';
     </div>
   </div>
 </header>
+<?php if (($notice = siteNotice()) !== ''): ?>
+<div class="site-notice" role="status">
+  <div class="container site-notice__inner"><?= icon('info') ?><p><?= nl2br(e($notice)) ?></p></div>
+</div>
+<?php endif; ?>

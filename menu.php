@@ -25,23 +25,23 @@ $allergens = getAllergens();
     <div class="menu-filters" id="menuFilters" role="tablist" aria-label="<?= h('Kategórie menu') ?>">
       <?php $first = true; foreach ($menu as $key => $category): ?>
       <button type="button" class="menu-filter<?= $first ? ' active' : '' ?>" data-filter="<?= e($key) ?>" role="tab" aria-selected="<?= $first ? 'true' : 'false' ?>">
-        <span><?= icon($category['icon']) ?></span> <?= h($category['label']) ?>
+        <span><?= icon($category['icon']) ?></span> <?= e(tf($category, 'label')) ?>
       </button>
       <?php $first = false; endforeach; ?>
     </div>
 
     <?php foreach ($menu as $key => $category): ?>
     <div class="menu-group" data-group="<?= e($key) ?>" id="cat-<?= e($key) ?>">
-      <header class="menu-group__head" style="background-image:url('<?= e(photo($category['photo'])) ?>')">
+      <header class="menu-group__head" style="background-image:url('<?= e(photo($category['photo'] ?? 'pizza-v-peci')) ?>')">
         <div class="menu-group__head-text">
-          <h2><?= h($category['label']) ?></h2>
+          <h2><?= e(tf($category, 'label')) ?></h2>
           <?php if (!empty($category['subtitle'])): ?>
-          <p class="menu-group__subtitle"><?= h($category['subtitle']) ?></p>
+          <p class="menu-group__subtitle"><?= e(tf($category, 'subtitle')) ?></p>
           <?php endif; ?>
         </div>
       </header>
       <?php if (!empty($category['note'])): ?>
-      <p class="menu-group__note"><?= h($category['note']) ?>
+      <p class="menu-group__note"><?= e(tf($category, 'note')) ?>
         <?php if (!empty($category['link'])): ?><a href="<?= e(url($category['link']['url'])) ?>"><?= h($category['link']['label']) ?> &rarr;</a><?php endif; ?>
       </p>
       <?php endif; ?>
@@ -50,13 +50,13 @@ $allergens = getAllergens();
         <?php foreach ($category['items'] as $item): ?>
         <article class="menu-item<?= !empty($item['photo']) ? ' menu-item--photo' : '' ?>">
           <?php if (!empty($item['photo'])): ?>
-          <img class="menu-item__img" src="<?= e(photo($item['photo'], true)) ?>" alt="<?= h($item['name']) ?>" loading="lazy">
+          <img class="menu-item__img" src="<?= e(photo($item['photo'], true)) ?>" alt="<?= e(tf($item, 'name')) ?>" loading="lazy">
           <?php endif; ?>
           <div class="menu-item__body">
             <div class="menu-item__top">
               <h3>
                 <?php if (!empty($item['num'])): ?><span class="menu-item__num"><?= (int) $item['num'] ?>.</span><?php endif; ?>
-                <?= h($item['name']) ?>
+                <?= e(tf($item, 'name')) ?>
               </h3>
               <div class="menu-item__prices">
                 <?php foreach (menuItemPrices($item) as $variant): ?>
@@ -68,7 +68,7 @@ $allergens = getAllergens();
               </div>
             </div>
             <?php if (!empty($item['desc'])): ?>
-            <p class="menu-item__desc"><?= e(tList($item['desc'])) ?></p>
+            <p class="menu-item__desc"><?= e(tf($item, 'desc', true)) ?></p>
             <?php endif; ?>
             <?php if (!empty($item['allergens'])): ?>
             <p class="menu-item__allergens" title="<?= e(implode(', ', array_map(function ($code) use ($allergens) { return $code . '. ' . t($allergens[$code] ?? ''); }, $item['allergens']))) ?>"><?= h('Alergény: %s', e(implode(', ', $item['allergens']))) ?></p>

@@ -34,8 +34,8 @@ foreach ($files as $file) {
     array_map($add, $m[1]);
 }
 
-// 2. Popisky v poliach šablón (galéria, oslavy, dlaždice na úvode)
-foreach (['galeria.php', 'oslavy-a-akcie.php', 'index.php'] as $file) {
+// 2. Popisky v poliach šablón (dlaždice na úvode)
+foreach (['index.php'] as $file) {
     $src = file_get_contents($file);
     preg_match_all('/\'[a-z0-9-]+\'\s*=>\s*\'([^\']+)\'/u', $src, $m);
     foreach ($m[1] as $text) {
@@ -49,18 +49,36 @@ foreach (['galeria.php', 'oslavy-a-akcie.php', 'index.php'] as $file) {
     array_map($add, $m[1]);
 }
 
-// 3. Dáta: jedálny lístok, alergény, typy akcií, dni, konštanty
+// 3. Dáta: galéria (bez vlastného maďarského textu z administrácie)
+foreach (galleryContent() as $section) {
+    if (empty($section['title_hu'])) {
+        $add($section['title']);
+    }
+    foreach ($section['photos'] as $photo) {
+        if (empty($photo['label_hu'])) {
+            $add($photo['label']);
+        }
+    }
+}
+
+// 4. Dáta: jedálny lístok, alergény, typy akcií, dni, konštanty
 foreach (getMenu() as $category) {
     foreach (['label', 'subtitle', 'note'] as $k) {
-        $add($category[$k] ?? '');
+        if (empty($category[$k . '_hu'])) {
+            $add($category[$k] ?? '');
+        }
     }
     $add($category['link']['label'] ?? '');
     foreach ($category['items'] as $item) {
-        $add($item['name']);
+        if (empty($item['name_hu'])) {
+            $add($item['name']);
+        }
         foreach (menuItemPrices($item) as $variant) {
             $add($variant['label']);
         }
-        array_map($add, preg_split('/(?:, | \+ )/u', $item['desc']));
+        if (empty($item['desc_hu'])) {
+            array_map($add, preg_split('/(?:, | \+ )/u', $item['desc'] ?? ''));
+        }
     }
 }
 array_map($add, getAllergens());
@@ -68,7 +86,7 @@ array_map($add, eventTypes());
 array_map($add, array_keys(OPENING_HOURS));
 array_map($add, dayAbbreviations());
 array_map($add, ['v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu', 'v nedeľu']);
-array_map($add, [SITE_CLAIM, DELIVERY_AREA]);
+array_map($add, [SITE_CLAIM]);
 
 $dict = require 'data/lang-hu.php';
 $missing = array_diff(array_keys($keys), array_keys($dict));

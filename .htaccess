@@ -35,7 +35,7 @@ ErrorDocument 404 /404.php
   # Maďarská verzia webu: /hu/ a /hu/menu -> tie isté PHP stránky, jazyk
   # sa určí z adresy (includes/functions.php, funkcia lang()).
   RewriteRule ^hu/?$ index.php [L]
-  RewriteRule ^hu/(menu|menu-tlac|galeria|oslavy-a-akcie|o-nas|doprava-a-platba|kontakt|ochrana-osobnych-udajov)/?$ $1.php [L]
+  RewriteRule ^hu/(menu|menu-pdf|galeria|oslavy-a-akcie|o-nas|doprava-a-platba|kontakt|ochrana-osobnych-udajov)/?$ $1.php [L]
 
   # Pekné URL bez .php prípony, napr. /menu -> menu.php
   RewriteCond %{REQUEST_FILENAME} !-f

@@ -4,8 +4,9 @@ Disallow: /includes/
 Disallow: /data/
 Disallow: /storage/
 Disallow: /tools/
-Disallow: /menu-tlac
-Disallow: /hu/menu-tlac
+Disallow: /admin/
+Disallow: /menu-pdf
+Disallow: /hu/menu-pdf
 Disallow: /process_contact.php
 
 Sitemap: https://www.pizzeriatominno.sk/sitemap.xml

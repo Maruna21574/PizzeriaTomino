@@ -5,22 +5,8 @@ $bodyClass = 'page-events';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/forms.php';
 
-$partyItem = getMenu()['naobjednavku']['items'][0];
-
-$eventPhotos = [
-    'oslava-1'                => 'Oslava v pizzerii',
-    'party-misa-1'            => 'Párty misa',
-    'oslava-2'                => 'Oslava v pizzerii',
-    'party-misa-4'            => 'Párty misa',
-    'detsky-den-3'            => 'Detský deň',
-    'kuracie-stripsy-etazer'  => 'Kuracie stripsy na etažére',
-    'prevadzka-interier'      => 'Interiér pizzerie',
-    'detsky-den-cukrova-vata' => 'Cukrová vata na detskom dni',
-    'party-misa-2'            => 'Párty misa',
-    'terasa'                  => 'Terasa',
-    'mini-burgre'             => 'Mini burgery',
-    'mikulas-v-pizzerii'      => 'Mikuláš v pizzerii',
-];
+// Párty misa z menu (kategória Na objednávku), ak ju klient v administrácii neskryl.
+$partyItem = getMenu()['naobjednavku']['items'][0] ?? null;
 
 $lightboxPhotos = [];
 ?>
@@ -81,13 +67,14 @@ $lightboxPhotos = [];
   </div>
 </section>
 
+<?php if ($partyItem): ?>
 <section class="section party-offer">
   <div class="container party-offer__grid">
     <div>
       <p class="eyebrow"><?= h('Na objednávku') ?></p>
-      <h2><?= h('Párty misa %s', e(t($partyItem['name']))) ?></h2>
-      <p class="party-offer__price"><?= formatPrice($partyItem['price']) ?> <small>/ <?= h('osoba') ?></small></p>
-      <p><?= e(tList($partyItem['desc'])) ?>.</p>
+      <h2><?= h('Párty misa %s', e(tf($partyItem, 'name'))) ?></h2>
+      <p class="party-offer__price"><?= formatPrice((float) menuItemPrices($partyItem)[0]['price']) ?> <small>/ <?= h('osoba') ?></small></p>
+      <p><?= e(tf($partyItem, 'desc', true)) ?>.</p>
       <p class="note"><?= h('Párty misy pripravujeme na objednávku - dajte nám prosím vedieť vopred. Celé menu nájdete v %s.', '<a href="' . e(url('/menu')) . '#cat-naobjednavku">' . h('jedálnom lístku') . '</a>') ?></p>
     </div>
     <div class="party-offer__photos">
@@ -96,6 +83,7 @@ $lightboxPhotos = [];
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <section class="section section--alt">
   <div class="container">
@@ -104,8 +92,8 @@ $lightboxPhotos = [];
       <h2><?= h('Takto to u nás vyzerá') ?></h2>
     </div>
     <div class="gallery-grid">
-      <?php foreach ($eventPhotos as $name => $label): ?>
-      <?= galleryFigure($name, $label, $lightboxPhotos) ?>
+      <?php foreach (galleryPhotos('on_events', 12) as $photo): ?>
+      <?= galleryFigure($photo, $lightboxPhotos) ?>
       <?php endforeach; ?>
     </div>
   </div>

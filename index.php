@@ -5,9 +5,8 @@ $bodyClass = 'page-home';
 require_once __DIR__ . '/includes/header.php';
 
 $menu = getMenu();
-$featured = array_values(array_filter($menu['pizza']['items'], function ($item) {
-    return !empty($item['photo']);
-}));
+$featured = featuredMenuItems();
+$pizzaCount = count($menu['pizza']['items'] ?? []);
 
 $categoryTiles = [
     ['url' => '/menu#cat-burgery', 'photo' => 'burger-tekuty-cheddar', 'title' => 'Burgery',        'text' => 'Domáce hovädzie burgery, kurací strips aj vegaburger.'],
@@ -16,7 +15,7 @@ $categoryTiles = [
     ['url' => '/oslavy-a-akcie',   'photo' => 'party-misa-1',          'title' => 'Oslavy a akcie', 'text' => 'Oslavy, firemné akcie a párty misy na objednávku.'],
 ];
 
-$galleryTeaser = ['pizza-v-peci', 'burgre-pred-pecou', 'prevadzka-interier', 'party-misa-2', 'pizza-prosciutto-burrata', 'terasa'];
+$galleryTeaser = galleryPhotos('home', 6);
 $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>';
 ?>
 
@@ -101,7 +100,7 @@ $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>'
     <div class="section__head">
       <p class="eyebrow"><?= h('Z našej pece') ?></p>
       <h2><?= h('Neapolská pizza') ?></h2>
-      <p class="section__lead"><?= h('Ochutnávka z nášho jedálneho lístka - v menu nájdete %s druhov pizze.', (string) count($menu['pizza']['items'])) ?></p>
+      <p class="section__lead"><?= h('Ochutnávka z nášho jedálneho lístka - v menu nájdete %s druhov pizze.', (string) $pizzaCount) ?></p>
     </div>
 
     <div class="card-grid">
@@ -111,12 +110,12 @@ $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>'
         <div class="food-card__body">
           <div class="food-card__top">
             <div>
-              <h3><?= (int) $item['num'] ?>. <?= e(t($item['name'])) ?></h3>
-              <span class="food-card__weight"><?= e($item['weight']) ?></span>
+              <h3><?php if (!empty($item['num'])): ?><?= (int) $item['num'] ?>. <?php endif; ?><?= e(tf($item, 'name')) ?></h3>
+              <?php if (!empty($item['weight'])): ?><span class="food-card__weight"><?= e(t($item['weight'])) ?></span><?php endif; ?>
             </div>
-            <span class="food-card__price"><?= formatPrice($item['price']) ?></span>
+            <span class="food-card__price"><?= formatPrice((float) menuItemPrices($item)[0]['price']) ?></span>
           </div>
-          <p><?= e(tList($item['desc'])) ?></p>
+          <p><?= e(tf($item, 'desc', true)) ?></p>
         </div>
       </article>
       <?php endforeach; ?>
@@ -155,7 +154,7 @@ $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>'
     <div>
       <p class="eyebrow"><?= h('Rozvoz') ?></p>
       <h2><?= h('Dovezieme vám ju domov') ?></h2>
-      <p><?= h('Rozvážame po obciach %s. Objednávky prijímame telefonicky, platíte až pri prevzatí.', '<strong>' . h(DELIVERY_AREA) . '</strong>') ?></p>
+      <p><?= h('Rozvážame po obciach %s. Objednávky prijímame telefonicky, platíte až pri prevzatí.', '<strong>' . e(deliveryArea()) . '</strong>') ?></p>
       <ul class="check-list">
         <li><?= h('Objednávka telefonicky na %s', $phoneLink) ?></li>
         <li><?= h('Platba v hotovosti alebo kartou') ?></li>
@@ -175,8 +174,8 @@ $phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>'
       <h2><?= h('Pozrite sa k nám') ?></h2>
     </div>
     <div class="gallery-teaser__grid">
-      <?php foreach ($galleryTeaser as $name): ?>
-      <a href="<?= e(url('/galeria')) ?>" class="gallery-teaser__item"><img src="<?= e(photo($name, true)) ?>" alt="Pizzeria Tominno" loading="lazy"></a>
+      <?php foreach ($galleryTeaser as $photo): ?>
+      <a href="<?= e(url('/galeria')) ?>" class="gallery-teaser__item"><img src="<?= e(photo($photo['file'], true)) ?>" alt="<?= e(tf($photo, 'label')) ?> - Pizzeria Tominno" loading="lazy"></a>
       <?php endforeach; ?>
     </div>
     <div class="section__cta">

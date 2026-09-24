@@ -3,6 +3,8 @@
  * Pomocné funkcie zdieľané naprieč webom.
  */
 
+require_once __DIR__ . '/content.php';
+
 function e(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -13,13 +15,65 @@ function formatPrice(float $price): string
     return number_format($price, 2, ',', ' ') . ' ' . CURRENCY;
 }
 
-function getMenu(): array
+/**
+ * Jedálny lístok ako [kľúč kategórie => kategória] (obsah z administrácie).
+ * Skryté kategórie a položky (dočasne nedostupné) sa vynechajú, ak nejde
+ * o administráciu ($includeHidden).
+ */
+function getMenu(bool $includeHidden = false): array
 {
-    static $menu = null;
-    if ($menu === null) {
-        $menu = require __DIR__ . '/../data/menu.php';
+    $menu = [];
+    foreach (menuContent() as $category) {
+        if (!$includeHidden && !empty($category['hidden'])) {
+            continue;
+        }
+        if (!$includeHidden) {
+            $category['items'] = array_values(array_filter($category['items'], function ($item) {
+                return empty($item['hidden']);
+            }));
+            if (!$category['items']) {
+                continue;
+            }
+        }
+        $menu[$category['key']] = $category;
     }
     return $menu;
+}
+
+/** Položky označené na zobrazenie na úvodnej stránke (najviac 6). */
+function featuredMenuItems(): array
+{
+    $items = [];
+    foreach (getMenu() as $category) {
+        foreach ($category['items'] as $item) {
+            if (!empty($item['featured']) && !empty($item['photo'])) {
+                $items[] = $item;
+            }
+        }
+    }
+    return array_slice($items, 0, 6);
+}
+
+/** Sekcie galérie s aspoň jednou fotkou. */
+function getGallery(): array
+{
+    return array_values(array_filter(galleryContent(), function ($section) {
+        return !empty($section['photos']);
+    }));
+}
+
+/** Fotky galérie podľa príznaku - 'home' (úvodná stránka) alebo sekcie 'on_events'. */
+function galleryPhotos(string $flag, int $limit = 0): array
+{
+    $photos = [];
+    foreach (getGallery() as $section) {
+        foreach ($section['photos'] as $photo) {
+            if ($flag === 'home' ? !empty($photo['home']) : !empty($section[$flag])) {
+                $photos[] = $photo;
+            }
+        }
+    }
+    return $limit ? array_slice($photos, 0, $limit) : $photos;
 }
 
 function getAllergens(): array
@@ -91,8 +145,17 @@ function hoursForDay(int $isoDay): ?array
     return array_values(OPENING_HOURS)[$isoDay - 1] ?? null;
 }
 
+/** Je dnes (alebo v daný deň) mimoriadne zatvorené? (Nastavenia -> zatvorené dni) */
+function isClosedDate(?string $date = null): bool
+{
+    return in_array($date ?? date('Y-m-d'), siteSettings()['closed_dates'], true);
+}
+
 function isOpenNow(): bool
 {
+    if (isClosedDate()) {
+        return false;
+    }
     $hours = hoursForDay((int) date('N'));
     if (!$hours) {
         return false;
@@ -106,14 +169,14 @@ function nextOpeningLabel(): string
 {
     $today = (int) date('N');
     $hours = hoursForDay($today);
-    if ($hours && date('H:i') < $hours[0]) {
+    if ($hours && !isClosedDate() && date('H:i') < $hours[0]) {
         return sprintf(t('o %s'), $hours[0]);
     }
     $onDay = ['v pondelok', 'v utorok', 'v stredu', 'vo štvrtok', 'v piatok', 'v sobotu', 'v nedeľu'];
     for ($i = 1; $i <= 7; $i++) {
         $day = ($today + $i - 1) % 7 + 1;
         $hours = hoursForDay($day);
-        if ($hours) {
+        if ($hours && !isClosedDate(date('Y-m-d', strtotime('+' . $i . ' day')))) {
             return $i === 1
                 ? sprintf(t('zajtra o %s'), $hours[0])
                 : sprintf(t('%s o %s'), t($onDay[$day - 1]), $hours[0]);
@@ -211,9 +274,10 @@ function encodeMailHeader(string $value): string
  * Fotka v mriežke galérie, ktorá sa po kliknutí otvorí v lightboxe
  * (includes/lightbox.php). Fotku zároveň pridá do $lightboxPhotos.
  */
-function galleryFigure(string $name, string $label, array &$lightboxPhotos): string
+function galleryFigure(array $photo, array &$lightboxPhotos): string
 {
-    $label = t($label);
+    $name = $photo['file'];
+    $label = tf($photo, 'label');
     $index = count($lightboxPhotos);
     $lightboxPhotos[] = ['full' => photo($name), 'label' => $label];
 
@@ -306,8 +370,46 @@ function url(string $path, ?string $forLang = null): string
     return '/' . $forLang . ($path === '/' ? '/' : $path);
 }
 
-/** Jedálny lístok na stiahnutie (PDF) v aktuálnom jazyku - generuje tools/menu-pdf.ps1. */
+/**
+ * Text z obsahu administrácie v aktuálnom jazyku. V maďarčine sa použije pole
+ * <pole>_hu (ak ho klient vyplnil), inak preklad zo slovníka. Pri popisoch
+ * jedál ($ingredients) sa slovník použije po jednotlivých surovinách.
+ */
+function tf(array $row, string $field, bool $ingredients = false): string
+{
+    $text = (string) ($row[$field] ?? '');
+    if (lang() === 'sk') {
+        return $text;
+    }
+    $translated = trim((string) ($row[$field . '_' . lang()] ?? ''));
+    if ($translated !== '') {
+        return $translated;
+    }
+    return $ingredients ? tList($text) : t($text);
+}
+
+/** Oblasť rozvozu v aktuálnom jazyku (Nastavenia v administrácii). */
+function deliveryArea(): string
+{
+    $settings = siteSettings();
+    if (lang() === 'hu' && trim($settings['delivery_area_hu']) !== '') {
+        return $settings['delivery_area_hu'];
+    }
+    return t(DELIVERY_AREA);
+}
+
+/** Text oznamu na webe (pás pod hlavičkou), alebo '' ak nie je aktívny. */
+function siteNotice(): string
+{
+    $notice = siteSettings()['notice'];
+    if (empty($notice['active'])) {
+        return '';
+    }
+    return trim(lang() === 'hu' && trim($notice['text_hu'] ?? '') !== '' ? $notice['text_hu'] : ($notice['text'] ?? ''));
+}
+
+/** Jedálny lístok na stiahnutie (PDF) v aktuálnom jazyku - generuje ho menu-pdf.php. */
 function menuPdfUrl(): string
 {
-    return '/assets/menu/pizzeria-tominno-menu-' . lang() . '.pdf';
+    return url('/menu-pdf');
 }

@@ -47,7 +47,7 @@ require_once __DIR__ . '/icons.php';
   <div class="footer-bottom">
     <div class="container footer-bottom__inner">
       <p>&copy; <?= date('Y') ?> <?= e(SITE_NAME) ?>. <?= h('Všetky práva vyhradené.') ?> · <a href="<?= e(url('/ochrana-osobnych-udajov')) ?>"><?= h('Ochrana osobných údajov') ?></a></p>
-      <p><?= h('Rozvoz: %s · Objednávky telefonicky · Platba hotovosť / karta', h(DELIVERY_AREA)) ?></p>
+      <p><?= h('Rozvoz: %s · Objednávky telefonicky · Platba hotovosť / karta', e(deliveryArea())) ?></p>
     </div>
   </div>
 </footer>
