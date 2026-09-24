@@ -1,1 +1,11 @@
-orders/*.json
+# Dáta generované za behu (tajný kľúč, limity formulárov, obsah z administrácie)
+storage/*
+!storage/.htaccess
+
+# Originály fotiek a videí od klienta - web používa optimalizované verzie
+# v assets/img/foto a assets/video, originály sa na hosting nenahrávajú.
+assets/img/jedlo/
+assets/img/menu/
+assets/img/pec_video/
+assets/img/potraviny/
+assets/img/auto.jpg

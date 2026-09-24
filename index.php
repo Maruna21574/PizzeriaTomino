@@ -1,131 +1,186 @@
 <?php
-$pageTitle = 'Domov';
-$pageDescription = 'Pizzeria Tominno v Novosade - pravá talianska pizza z pece na drevo. Objednajte si online s rozvozom kuriérom, platba na dobierku (hotovosť alebo karta).';
+$pageTitle = 'Neapolská pizza z pece na drevo';
+$pageDescription = 'Pizzeria Tominno v Novosade - neapolská pizza pečená v peci na drevo, talianska múka a cesto fermentované 48 hodín. Rozvoz Novosad, Trebišov a okolie, platba hotovosťou alebo kartou.';
 $bodyClass = 'page-home';
 require_once __DIR__ . '/includes/header.php';
 
 $menu = getMenu();
-$featured = array_slice($menu['pizza']['items'], 0, 6);
+$featured = array_values(array_filter($menu['pizza']['items'], function ($item) {
+    return !empty($item['photo']);
+}));
+
+$categoryTiles = [
+    ['url' => '/menu#cat-burgery', 'photo' => 'burger-tekuty-cheddar', 'title' => 'Burgery',        'text' => 'Domáce hovädzie burgery, kurací strips aj vegaburger.'],
+    ['url' => '/menu#cat-kebab',   'photo' => 'kebab-tanier',          'title' => 'Kebab a grill',  'text' => 'Kebab v pizza chlebe, tortilly, stripsy a boxy.'],
+    ['url' => '/menu#cat-salaty',  'photo' => 'bufala-salat',          'title' => 'Šaláty',         'text' => 'Bufala, caprese, s kozím syrom či granátovým jablkom.'],
+    ['url' => '/oslavy-a-akcie',   'photo' => 'party-misa-1',          'title' => 'Oslavy a akcie', 'text' => 'Oslavy, firemné akcie a párty misy na objednávku.'],
+];
+
+$galleryTeaser = ['pizza-v-peci', 'burgre-pred-pecou', 'prevadzka-interier', 'party-misa-2', 'pizza-prosciutto-burrata', 'terasa'];
+$phoneLink = '<a href="tel:' . e(SITE_PHONE_TEL) . '">' . e(SITE_PHONE) . '</a>';
 ?>
 
 <section class="hero">
-  <div class="hero__bg" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1900&q=80')"></div>
+  <div class="hero__bg" style="background-image:url('<?= e(photo('pizza-margherita-pec')) ?>')"></div>
   <div class="hero__overlay"></div>
   <div class="container hero__content">
-    <p class="eyebrow">Novosad · Michalovce a okolie</p>
-    <h1>Pravá talianska pizza,<br>rovno z <span>pece na drevo</span></h1>
-    <p class="hero__lead">Čerstvé cesto, kvalitné suroviny a chuť, na ktorú si spomeniete. Doručíme ju priamo k vám kuriérom - stačí zavolať alebo objednať online.</p>
+    <p class="eyebrow"><?= h('Novosad · Trebišov a okolie') ?></p>
+    <h1><?= h('Neapolská pizza') ?><br><?= h('pečená v %s', '<span>' . h('peci na drevo') . '</span>') ?></h1>
+    <p class="hero__lead"><?= h('Talianska múka, cesto fermentované 48 hodín a poctivé talianske suroviny. Pizzu vám radi dovezieme - stačí zavolať.') ?></p>
     <div class="hero__actions">
-      <a href="/objednavka.php" class="btn btn--primary btn--lg">Objednať online</a>
-      <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="btn btn--ghost btn--lg"><?= icon('phone') ?> <?= e(SITE_PHONE) ?></a>
+      <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="btn btn--primary btn--lg"><?= icon('phone') ?> <?= h('Zavolať a objednať') ?></a>
+      <a href="<?= e(url('/menu')) ?>" class="btn btn--ghost btn--lg"><?= h('Pozrieť menu') ?></a>
     </div>
     <ul class="hero__badges">
-      <li><?= icon('flame', 'icon icon--sm') ?> Pečené na dreve</li>
-      <li><?= icon('truck', 'icon icon--sm') ?> Rozvoz kuriérom</li>
-      <li><?= icon('cash', 'icon icon--sm') ?> Platba na dobierku</li>
+      <li><?= icon('clock', 'icon icon--sm') ?> <?= h('Cesto fermentované 48 hodín') ?></li>
+      <li><?= icon('wheat', 'icon icon--sm') ?> <?= h('Talianska múka') ?></li>
+      <li><?= icon('flame', 'icon icon--sm') ?> <?= h('Pec na drevo') ?></li>
+      <li><?= icon('truck', 'icon icon--sm') ?> <?= h('Rozvoz · hotovosť / karta') ?></li>
     </ul>
+  </div>
+</section>
+
+<section class="section story">
+  <div class="container">
+
+    <div class="story-row">
+      <div class="story-row__media">
+        <video class="story-video" src="/assets/video/priprava-cesta.mp4" poster="/assets/video/priprava-cesta.jpg" autoplay muted loop playsinline preload="metadata" aria-label="<?= h('Video: takto u nás pripravujeme cesto na pizzu') ?>"></video>
+      </div>
+      <div class="story-row__text">
+        <p class="eyebrow"><?= h('Tajomstvo je v ceste') ?></p>
+        <h2><?= h('Cesto fermentované 48 hodín') ?></h2>
+        <p><?= h('Takto u nás vzniká cesto na pizzu. Miesime ho z talianskej múky, ručne tvarujeme bochníky a potom ho necháme v pokoji dozrieť celých 48 hodín.') ?></p>
+        <p><?= h('Dlhá fermentácia robí cesto ľahké, vzdušné a lepšie stráviteľné. Okraj pizze sa v peci krásne nafúkne a dostane typické opečené bodky - presne ako v Neapole.') ?></p>
+        <ul class="check-list">
+          <li><?= h('Talianska múka na neapolskú pizzu') ?></li>
+          <li><?= h('48 hodín pomalej fermentácie') ?></li>
+          <li><?= h('Každý bochník tvarujeme ručne') ?></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story-row story-row--reverse">
+      <div class="story-row__media">
+        <video class="story-video" src="/assets/video/pec-na-drevo.mp4" poster="/assets/video/pec-na-drevo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="<?= h('Video: pizza sa pečie v našej peci na drevo') ?>"></video>
+      </div>
+      <div class="story-row__text">
+        <p class="eyebrow"><?= h('Oheň a drevo') ?></p>
+        <h2><?= h('Pečieme v peci na drevo') ?></h2>
+        <p><?= h('Naša neapolská pizza sa pečie v rozpálenej peci na drevo. Vysoká teplota ju upečie za krátky čas - spodok je chrumkavý, okraj nadýchaný a suroviny zostanú šťavnaté.') ?></p>
+        <p><?= h('Tú pravú chuť ohňa nenahradí žiadna elektrická pec. Najlepšia je pizza priamo u nás, vybratá z rozpálenej pece - no radi vám ju dovezieme aj domov.') ?></p>
+        <a href="<?= e(url('/menu')) ?>" class="btn btn--outline"><?= h('Pozrieť ponuku pizze') ?></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section ingredients">
+  <div class="container ingredients__grid">
+    <div class="ingredients__photos">
+      <img src="<?= e(photo('talianske-suroviny', true)) ?>" alt="<?= h('Talianske suroviny, ktoré používame - paradajky Rosso Gargano, prosciutto, syry') ?>" loading="lazy">
+      <img src="<?= e(photo('talianska-muka', true)) ?>" alt="<?= h('Talianska múka na neapolskú pizzu') ?>" loading="lazy">
+    </div>
+    <div class="ingredients__text">
+      <p class="eyebrow"><?= h('Talianske suroviny') ?></p>
+      <h2><?= h('Chuť Talianska v každom kúsku') ?></h2>
+      <p><?= h('Na pizzu používame taliansky tovar a taliansku múku. Neapolská pizza stojí na jednoduchých, ale poctivých surovinách - preto na nich nešetríme.') ?></p>
+      <ul class="ingredients__list">
+        <li><?= icon('wheat') ?><span><strong><?= h('Talianska múka') ?></strong> <?= h('na neapolské cesto') ?></span></li>
+        <li><?= icon('leaf') ?><span><strong>Pomodoro pelato Rosso Gargano</strong> - <?= h('lúpané talianske paradajky') ?></span></li>
+        <li><?= icon('heart') ?><span><strong>Mozzarella Fiordilatte Taglio Napoli</strong></span></li>
+        <li><?= icon('chef-hat') ?><span><strong>Prosciutto crudo stagionato</strong>, <?= h('burrata, gorgonzola, ventricina') ?></span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <section class="section featured">
   <div class="container">
     <div class="section__head">
-      <p class="eyebrow">Naša ponuka</p>
-      <h2>Najobľúbenejšie pizze</h2>
-      <p class="section__lead">Výber z nášho jedálneho lístka - kompletné menu nájdete na samostatnej stránke.</p>
+      <p class="eyebrow"><?= h('Z našej pece') ?></p>
+      <h2><?= h('Neapolská pizza') ?></h2>
+      <p class="section__lead"><?= h('Ochutnávka z nášho jedálneho lístka - v menu nájdete %s druhov pizze.', (string) count($menu['pizza']['items'])) ?></p>
     </div>
 
     <div class="card-grid">
       <?php foreach ($featured as $item): ?>
       <article class="food-card">
-        <div class="food-card__img" style="background-image:url('<?= e($item['img']) ?>')">
-          <?php if (!empty($item['tags'])): ?>
-          <span class="food-card__tag"><?= e(ucfirst($item['tags'][0])) ?></span>
-          <?php endif; ?>
-          <?= allergenTriggerButton($item) ?>
-        </div>
+        <div class="food-card__img" style="background-image:url('<?= e(photo($item['photo'], true)) ?>')"></div>
         <div class="food-card__body">
           <div class="food-card__top">
             <div>
-              <h3><?= e($item['name']) ?></h3>
-              <?php if (!empty($item['weight'])): ?>
+              <h3><?= (int) $item['num'] ?>. <?= e(t($item['name'])) ?></h3>
               <span class="food-card__weight"><?= e($item['weight']) ?></span>
-              <?php endif; ?>
             </div>
             <span class="food-card__price"><?= formatPrice($item['price']) ?></span>
           </div>
-          <p><?= e($item['desc']) ?></p>
-          <button class="btn btn--add" data-add-to-cart data-id="<?= e($item['id']) ?>" data-name="<?= e($item['name']) ?>" data-price="<?= e($item['price']) ?>">
-            + Pridať do košíka
-          </button>
+          <p><?= e(tList($item['desc'])) ?></p>
         </div>
       </article>
       <?php endforeach; ?>
     </div>
 
+    <div class="section__cta section__cta--row">
+      <a href="<?= e(url('/menu')) ?>" class="btn btn--outline btn--lg"><?= h('Zobraziť celé menu') ?></a>
+      <a href="<?= e(menuPdfUrl()) ?>" class="btn btn--outline btn--lg" download><?= icon('download') ?> <?= h('Menu na stiahnutie (PDF)') ?></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt categories">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow"><?= h('Nielen pizza') ?></p>
+      <h2><?= h('Burgery, kebab, šaláty a oslavy') ?></h2>
+    </div>
+    <div class="cat-tiles">
+      <?php foreach ($categoryTiles as $tile): ?>
+      <a class="cat-tile" href="<?= e(url($tile['url'])) ?>">
+        <span class="cat-tile__img" style="background-image:url('<?= e(photo($tile['photo'], true)) ?>')"></span>
+        <span class="cat-tile__body">
+          <strong><?= h($tile['title']) ?></strong>
+          <span><?= h($tile['text']) ?></span>
+        </span>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<section class="section delivery-teaser">
+  <div class="container delivery-teaser__grid">
+    <img class="delivery-teaser__img" src="<?= e(photo('rozvoz-auto', true)) ?>" alt="<?= h('Rozvozové auto Pizzeria Tominno') ?>" loading="lazy">
+    <div>
+      <p class="eyebrow"><?= h('Rozvoz') ?></p>
+      <h2><?= h('Dovezieme vám ju domov') ?></h2>
+      <p><?= h('Rozvážame po obciach %s. Objednávky prijímame telefonicky, platíte až pri prevzatí.', '<strong>' . h(DELIVERY_AREA) . '</strong>') ?></p>
+      <ul class="check-list">
+        <li><?= h('Objednávka telefonicky na %s', $phoneLink) ?></li>
+        <li><?= h('Platba v hotovosti alebo kartou') ?></li>
+        <li><?= h('Otváracie hodiny: %s', e(openingHoursSummary())) ?></li>
+      </ul>
+      <a href="<?= e(url('/doprava-a-platba')) ?>" class="btn btn--outline"><?= h('Rozvoz a platba') ?></a>
+    </div>
+  </div>
+</section>
+
+<?php require __DIR__ . '/includes/reviews.php'; ?>
+
+<section class="section gallery-teaser">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow"><?= h('Galéria') ?></p>
+      <h2><?= h('Pozrite sa k nám') ?></h2>
+    </div>
+    <div class="gallery-teaser__grid">
+      <?php foreach ($galleryTeaser as $name): ?>
+      <a href="<?= e(url('/galeria')) ?>" class="gallery-teaser__item"><img src="<?= e(photo($name, true)) ?>" alt="Pizzeria Tominno" loading="lazy"></a>
+      <?php endforeach; ?>
+    </div>
     <div class="section__cta">
-      <a href="/menu.php" class="btn btn--outline btn--lg">Zobraziť celé menu</a>
-    </div>
-  </div>
-</section>
-
-<section class="section how-it-works how-it-works--light">
-  <div class="container">
-    <div class="section__head">
-      <p class="eyebrow">Ako to funguje</p>
-      <h2>Objednávka v troch krokoch</h2>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="step__num">1</span>
-        <h3>Vyberte si jedlo</h3>
-        <p>Prejdite si menu a pridajte obľúbené pizze či prílohy do košíka.</p>
-      </div>
-      <div class="step">
-        <span class="step__num">2</span>
-        <h3>Vyplňte objednávku</h3>
-        <p>Zadajte adresu doručenia a vyberte spôsob platby - hotovosť alebo karta u kuriéra.</p>
-      </div>
-      <div class="step">
-        <span class="step__num">3</span>
-        <h3>Kuriér doručí</h3>
-        <p>Objednávku pripravíme a doručíme priamo k vašim dverám v Novosade a okolí.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section about-teaser">
-  <div class="container about-teaser__grid">
-    <div class="about-teaser__img" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80')"></div>
-    <div class="about-teaser__text">
-      <p class="eyebrow">O nás</p>
-      <h2>Pizzeria s dušou v srdci Novosadu</h2>
-      <p>V Pizzerii Tominno pripravujeme pizzu s láskou k talianskej kuchyni a poctivým surovinám. Naším cieľom je, aby si každý zákazník pochutnal ako v Taliansku - bez ohľadu na to, či prídete k nám, alebo si objednáte rozvoz domov.</p>
-      <a href="/o-nas.php" class="btn btn--outline">Viac o nás</a>
-    </div>
-  </div>
-</section>
-
-<section class="section testimonials">
-  <div class="container">
-    <div class="section__head">
-      <p class="eyebrow">Referencie</p>
-      <h2>Čo hovoria naši zákazníci</h2>
-    </div>
-    <div class="testimonial-grid">
-      <blockquote class="testimonial">
-        <p>„Najlepšia pizza v okolí Michaloviec. Cesto je nadýchané a doviezli nám ju ešte teplú.“</p>
-        <cite>— Jana, Novosad</cite>
-      </blockquote>
-      <blockquote class="testimonial">
-        <p>„Objednávanie bolo jednoduché a rýchle, platba kuriérovi kartou bola super výhoda.“</p>
-        <cite>— Peter, Michalovce</cite>
-      </blockquote>
-      <blockquote class="testimonial">
-        <p>„Pravidelne si objednávame Tominno Špeciál, chuťou pripomína dovolenku v Taliansku.“</p>
-        <cite>— Miroslava, Kusín</cite>
-      </blockquote>
+      <a href="<?= e(url('/galeria')) ?>" class="btn btn--outline btn--lg"><?= h('Celá galéria') ?></a>
     </div>
   </div>
 </section>
@@ -133,10 +188,10 @@ $featured = array_slice($menu['pizza']['items'], 0, 6);
 <section class="cta-band">
   <div class="container cta-band__inner">
     <div>
-      <h2>Chutí vám to už teraz?</h2>
-      <p>Objednajte si online, alebo nám jednoducho zavolajte na <?= e(SITE_PHONE) ?>.</p>
+      <h2><?= h('Dostali ste chuť?') ?></h2>
+      <p><?= h('Zavolajte nám a objednajte si - rozvoz Novosad, Trebišov a okolie.') ?></p>
     </div>
-    <a href="/objednavka.php" class="btn btn--primary btn--lg">Objednať pizzu</a>
+    <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="btn btn--primary btn--lg"><?= icon('phone') ?> <?= e(SITE_PHONE) ?></a>
   </div>
 </section>
 

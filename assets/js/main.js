@@ -7,21 +7,6 @@
 
   document.addEventListener('DOMContentLoaded', function () {
 
-    // Zvýraznenie vybranej možnosti platby (fallback pre prehliadače bez :has())
-    var paymentOptions = document.querySelectorAll('.payment-option');
-    if (paymentOptions.length) {
-      var syncPayment = function () {
-        paymentOptions.forEach(function (label) {
-          var input = label.querySelector('input');
-          label.classList.toggle('payment-option--selected', !!(input && input.checked));
-        });
-      };
-      paymentOptions.forEach(function (label) {
-        label.addEventListener('change', syncPayment);
-      });
-      syncPayment();
-    }
-
     // Mobilná navigácia
     var toggle = document.getElementById('navToggle');
     var nav = document.getElementById('mainNav');
@@ -67,61 +52,6 @@
       });
     }
 
-    // Modálne okno s alergénmi (spúšťané tlačidlom ⓘ na kartičkách jedál)
-    var allergenModal = document.getElementById('allergenModal');
-    if (allergenModal) {
-      var allergenTitle = document.getElementById('allergenModalTitle');
-      var allergenList = document.getElementById('allergenModalList');
-      var lastFocusedEl = null;
-
-      var openAllergenModal = function (itemName, labels) {
-        lastFocusedEl = document.activeElement;
-        allergenTitle.textContent = itemName;
-
-        if (labels.length) {
-          allergenList.innerHTML = labels.map(function (label) {
-            return '<li>' + label.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</li>';
-          }).join('');
-        } else {
-          allergenList.innerHTML = '<li class="modal__list-empty">Táto položka neobsahuje žiadny z 14 povinne označovaných alergénov.</li>';
-        }
-
-        allergenModal.hidden = false;
-        document.body.classList.add('modal-open');
-        allergenModal.querySelector('.modal__close').focus();
-      };
-
-      var closeAllergenModal = function () {
-        allergenModal.hidden = true;
-        document.body.classList.remove('modal-open');
-        if (lastFocusedEl) lastFocusedEl.focus();
-      };
-
-      document.addEventListener('click', function (e) {
-        var trigger = e.target.closest('[data-allergen-trigger]');
-        if (trigger) {
-          e.preventDefault();
-          var itemName = trigger.getAttribute('data-item-name') || '';
-          var labels = [];
-          try {
-            labels = JSON.parse(trigger.getAttribute('data-allergen-labels') || '[]');
-          } catch (err) {
-            labels = [];
-          }
-          openAllergenModal(itemName, labels);
-          return;
-        }
-
-        if (e.target.closest('[data-modal-close]')) {
-          closeAllergenModal();
-        }
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && !allergenModal.hidden) closeAllergenModal();
-      });
-    }
-
     // Tieň hlavičky pri scrollovaní
     var header = document.querySelector('.site-header');
     if (header) {
@@ -154,6 +84,10 @@
           var active = b.getAttribute('data-filter') === key;
           b.classList.toggle('active', active);
           b.setAttribute('aria-selected', active ? 'true' : 'false');
+          // Na mobile sú filtre v posúvateľnom riadku - aktívny držíme v zábere.
+          if (active && b.parentNode.scrollWidth > b.parentNode.clientWidth) {
+            b.parentNode.scrollTo({ left: b.offsetLeft - 20, behavior: 'smooth' });
+          }
         });
       };
 

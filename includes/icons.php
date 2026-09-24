@@ -4,9 +4,6 @@
  *
  * icon($name)     - jednofarebné (currentColor) UI ikony pre texty, tlačidlá,
  *                    kontakt, kroky atď. Farbu preberajú z okolitého CSS.
- * toppingIcon()   - definície farebných ilustračných ikon prísad pre
- *                    "Poskladaj si pizzu" (vlastna-pizza.php), vykresľované
- *                    ako <symbol> sprite a znovupoužívané cez <use>.
  */
 
 function icon(string $name, string $class = 'icon'): string
@@ -30,6 +27,11 @@ function icon(string $name, string $class = 'icon'): string
         'cake' => '<path d="M3 20h18l-2-7H5l-2 7z"/><path d="M6 13l6-9 6 9"/><circle cx="12" cy="4" r="1.2" fill="currentColor" stroke="none"/>',
         'garlic' => '<path d="M12 3c3 2 5 5 5 9a5 5 0 0 1-10 0c0-4 2-7 5-9z"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="9.5" y1="9" x2="9.5" y2="14"/><line x1="14.5" y1="9" x2="14.5" y2="14"/>',
         'check-circle' => '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+        'burger' => '<path d="M4 10a8 5 0 0 1 16 0z"/><path d="M3 13.5h18"/><path d="M4 17h16v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 13.5c1.3 1.2 2.7 1.2 4 0s2.7-1.2 4 0 2.7 1.2 4 0 2.7-1.2 4 0"/>',
+        'fries' => '<path d="M5 10h14l-2 11H7L5 10z"/><path d="M7 10 6 3"/><path d="M10 10V2"/><path d="M14 10V3"/><path d="M17 10l1-6"/>',
+        'wheat' => '<line x1="12" y1="22" x2="12" y2="8"/><path d="M12 8c-2-1-3-3-3-5 2 1 3 3 3 5zM12 8c2-1 3-3 3-5-2 1-3 3-3 5z"/><path d="M12 13c-2-1-3-3-3-5 2 1 3 3 3 5zM12 13c2-1 3-3 3-5-2 1-3 3-3 5z"/><path d="M12 18c-2-1-3-3-3-5 2 1 3 3 3 5zM12 18c2-1 3-3 3-5-2 1-3 3-3 5z"/>',
+        'star' => '<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2" fill="currentColor" stroke="none"/>',
+        'download' => '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
         'mail' => '<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/>',
         'cart' => '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
         'external-link' => '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
@@ -56,49 +58,3 @@ function icon(string $name, string $class = 'icon'): string
     );
 }
 
-/**
- * Farebné ilustračné ikony prísad pre pizza builder. Vracia pole
- * [id => vnútorný SVG markup] - používa sa na vykreslenie <symbol> spritu
- * (renderToppingSprite) aj samostatne v chip tlačidlách cez <use>.
- */
-function toppingIconDefs(): array
-{
-    return [
-        'sunka' => '<circle cx="12" cy="12" r="9" fill="#f3a9a0"/><path d="M6 12c2-3 10-3 12 0" stroke="#ffffff" stroke-width="1.4" fill="none" stroke-linecap="round"/>',
-        'slanina' => '<rect x="3" y="7" width="18" height="10" rx="4" fill="#e8998b"/><path d="M4 10c4 2 12-2 16 0M4 14c4 2 12-2 16 0" stroke="#c65c4d" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
-        'kuracie' => '<circle cx="11" cy="11" r="7" fill="#e3b57a"/><rect x="14" y="15" width="3" height="7" rx="1.5" fill="#e3b57a"/><circle cx="17.5" cy="21" r="2" fill="#e3b57a"/>',
-        'salama' => '<circle cx="12" cy="12" r="9" fill="#b53a35"/><circle cx="9" cy="10" r="1.1" fill="#7a211d"/><circle cx="15" cy="9" r="1.1" fill="#7a211d"/><circle cx="12" cy="15" r="1.1" fill="#7a211d"/>',
-        'tunak' => '<circle cx="12" cy="12" r="9" fill="#7c93a3"/><path d="M6 11a7 4 0 0 1 12 0" stroke="#c7d4dc" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
-        'mozzarella-extra' => '<circle cx="12" cy="12" r="9" fill="#fdf6e8"/><path d="M8 9c1 2 1 4 0 6M16 9c-1 2-1 4 0 6" stroke="#eadfc4" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
-        'gorgonzola' => '<circle cx="12" cy="12" r="9" fill="#f5eeda"/><path d="M8 9c1 1 0 2 1 3s-1 2 0 3M14 8c1 1 0 2 1 3s-1 2 0 3" stroke="#6f9c93" stroke-width="1.1" fill="none" stroke-linecap="round"/>',
-        'parmezan' => '<circle cx="12" cy="12" r="9" fill="#f6e6a8"/><circle cx="9" cy="9" r="0.8" fill="#d9bd63"/><circle cx="14" cy="10" r="0.8" fill="#d9bd63"/><circle cx="11" cy="14" r="0.8" fill="#d9bd63"/><circle cx="15" cy="14" r="0.8" fill="#d9bd63"/>',
-        'eidam' => '<circle cx="12" cy="12" r="9" fill="#f2c14e"/><circle cx="9" cy="10" r="1.3" fill="#fdf1cf"/><circle cx="15" cy="12" r="1" fill="#fdf1cf"/><circle cx="11" cy="15" r="1.1" fill="#fdf1cf"/>',
-        'huby' => '<path d="M4 11a8 5 0 0 1 16 0z" fill="#e4d4b8"/><rect x="10" y="11" width="4" height="7" rx="1.5" fill="#fbf3e4"/>',
-        'cibula' => '<circle cx="12" cy="12" r="9" fill="#d9c3e0"/><circle cx="12" cy="12" r="6" fill="none" stroke="#b48fc2" stroke-width="1"/><circle cx="12" cy="12" r="3" fill="none" stroke="#b48fc2" stroke-width="1"/>',
-        'paprika' => '<circle cx="12" cy="12" r="9" fill="#7bb661"/><circle cx="12" cy="12" r="4" fill="#fdf6e8"/>',
-        'kukurica' => '<circle cx="12" cy="12" r="9" fill="#f4d35e"/><circle cx="9" cy="9" r="1" fill="#d8ad2c"/><circle cx="13" cy="8" r="1" fill="#d8ad2c"/><circle cx="16" cy="10" r="1" fill="#d8ad2c"/><circle cx="9" cy="13" r="1" fill="#d8ad2c"/><circle cx="13" cy="13" r="1" fill="#d8ad2c"/><circle cx="16" cy="15" r="1" fill="#d8ad2c"/>',
-        'olivy' => '<circle cx="12" cy="12" r="8" fill="#2f2a1e"/><circle cx="12" cy="12" r="3" fill="#e8b7a6"/>',
-        'rukola' => '<path d="M12 4c5 2 7 8 3 14-6-1-8-9-3-14z" fill="#5c9a4b"/><line x1="12" y1="6" x2="13" y2="16" stroke="#3f6e33" stroke-width="1"/>',
-        'cherry' => '<circle cx="12" cy="13" r="7" fill="#d94f3d"/><path d="M12 6c-1-1-1-2 0-3 1 1 1 2 0 3z" fill="#5c9a4b"/><circle cx="10" cy="11" r="1" fill="#f0a293"/>',
-        'jalapenos' => '<circle cx="12" cy="12" r="9" fill="#8fc65a"/><circle cx="12" cy="12" r="4.5" fill="#e9f2c9"/><circle cx="10" cy="11" r="0.8" fill="#c9d98a"/><circle cx="13" cy="13" r="0.8" fill="#c9d98a"/>',
-        'ananas' => '<path d="M4 12a8 8 0 0 1 16 0 8 8 0 0 1-16 0z" fill="#f2c230"/><path d="M6 10l4 4M10 10l4 4M14 10l4 4M6 14l4-4M10 14l4-4M14 14l4-4" stroke="#d9a71b" stroke-width="0.8"/>',
-        'cesnak' => '<path d="M12 4c3 2 5 5 5 9a5 5 0 0 1-10 0c0-4 2-7 5-9z" fill="#fdf8ea"/><line x1="12" y1="4" x2="12" y2="8" stroke="#e6dcc0" stroke-width="1"/><line x1="9.5" y1="10" x2="9.5" y2="15" stroke="#e6dcc0" stroke-width="1"/><line x1="14.5" y1="10" x2="14.5" y2="15" stroke="#e6dcc0" stroke-width="1"/>',
-        'oregano' => '<circle cx="8" cy="9" r="1.4" fill="#5c8a3a"/><circle cx="14" cy="8" r="1.6" fill="#6b9c46"/><circle cx="11" cy="13" r="1.3" fill="#5c8a3a"/><circle cx="16" cy="14" r="1.4" fill="#6b9c46"/><circle cx="9" cy="16" r="1.1" fill="#5c8a3a"/>',
-        'chilli' => '<circle cx="8" cy="9" r="1.4" fill="#c8452f"/><circle cx="14" cy="8" r="1.6" fill="#e2653e"/><circle cx="11" cy="13" r="1.3" fill="#c8452f"/><circle cx="16" cy="14" r="1.4" fill="#e2653e"/><circle cx="9" cy="16" r="1.1" fill="#c8452f"/>',
-    ];
-}
-
-function renderToppingSprite(): string
-{
-    $out = '<svg class="sprite-defs" aria-hidden="true" focusable="false">';
-    foreach (toppingIconDefs() as $id => $body) {
-        $out .= sprintf('<symbol id="topping-%s" viewBox="0 0 24 24">%s</symbol>', e($id), $body);
-    }
-    $out .= '</svg>';
-    return $out;
-}
-
-function toppingIconUse(string $id, string $class = 'topping-icon'): string
-{
-    return sprintf('<svg class="%s" aria-hidden="true"><use href="#topping-%s"></use></svg>', e($class), e($id));
-}

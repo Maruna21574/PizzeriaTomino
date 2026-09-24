@@ -70,19 +70,6 @@
     background-position: center;
   }
 
-  &__tag {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: $color-secondary;
-    color: $color-dark;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    padding: 4px 10px;
-    border-radius: $radius-pill;
-  }
 
   &__body {
     padding: 18px 20px 20px;
@@ -120,101 +107,6 @@
     font-size: 0.88rem;
     margin: 0;
     flex: 1;
-  }
-}
-
-// Kroky "ako to funguje"
-.how-it-works--light {
-  background: $color-cream-alt;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-
-  @include respond($bp-md) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.step {
-  text-align: center;
-
-  h3 { margin-bottom: 0.4em; }
-  p { color: $color-muted; margin: 0; }
-}
-
-.step__num {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: $color-primary;
-  color: $color-white;
-  font-family: $font-heading;
-  font-weight: 700;
-  font-size: 1.05rem;
-  line-height: 1;
-  margin: 0 auto 14px;
-  @include flex-center;
-}
-
-// About teaser (homepage)
-.about-teaser__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: center;
-
-  @include respond($bp-lg) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.about-teaser__img {
-  height: 380px;
-  border-radius: $radius-lg;
-  background-size: cover;
-  background-position: center;
-  box-shadow: $shadow-md;
-
-  @include respond($bp-lg) {
-    height: 260px;
-    order: -1;
-  }
-}
-
-.about-teaser__text p {
-  color: $color-muted;
-}
-
-// Testimonials
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-
-  @include respond($bp-lg) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.testimonial {
-  @include card-surface;
-  margin: 0;
-  padding: 26px 24px;
-
-  p {
-    font-style: italic;
-    color: $color-text;
-    margin-bottom: 14px;
-  }
-
-  cite {
-    font-style: normal;
-    font-weight: 600;
-    color: $color-primary;
-    font-size: 0.88rem;
   }
 }
 

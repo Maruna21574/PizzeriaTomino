@@ -1,81 +1,135 @@
 <?php
 $pageTitle = 'Galéria';
-$pageDescription = 'Pozrite si fotografie našich pizz, cestovín a interiéru Pizzeria Tominno v Novosade.';
+$pageDescription = 'Fotky a videá z Pizzeria Tominno v Novosade - neapolská pizza z pece na drevo, burgery, kebab, párty misy, naša prevádzka a akcie.';
 $bodyClass = 'page-gallery';
 require_once __DIR__ . '/includes/header.php';
 
-$gallery = [
-    ['img' => 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', 'label' => 'Pizza z pece na drevo'],
-    ['img' => 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80', 'label' => 'Prosciutto e Funghi'],
-    ['img' => 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&w=900&q=80', 'label' => 'Diavola'],
-    ['img' => 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80', 'label' => 'Cestoviny Bolognese'],
-    ['img' => 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80', 'label' => 'Tiramisu'],
-    ['img' => 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80', 'label' => 'Šalát s kuracím mäsom'],
-    ['img' => 'https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=900&q=80', 'label' => 'Príprava cesta'],
-    ['img' => 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80', 'label' => 'Pizza v peci'],
-    ['img' => 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=900&q=80', 'label' => 'Quattro Stagioni'],
-    ['img' => 'https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=900&q=80', 'label' => 'Parmská pizza'],
-    ['img' => 'https://images.unsplash.com/photo-1595295333158-4742f28fbd85?auto=format&fit=crop&w=900&q=80', 'label' => 'Naša prevádzka'],
+// Sekcie galérie - názvy súborov z assets/img/foto (bez prípony) => popis.
+$gallerySections = [
+    'Neapolská pizza' => [
+        'pizza-margherita-pec'     => 'Margherita z pece na drevo',
+        'pizza-v-peci'             => 'Pizza v peci na drevo',
+        'pizza-margherita'         => 'Margherita',
+        'pizza-gorgonzola'         => 'Gorgonzola s hruškami a orechmi',
+        'pizza-kukuricova'         => 'Kukuricová',
+        'pizza-prosciutto-burrata' => 'Pizza s prosciuttom a burratou',
+        'pizza-prosciutto-rukola'  => 'Pizza s prosciuttom a rukolou',
+        'pizza-rukola-parmezan'    => 'Pizza s rukolou a parmezánom',
+        'pizza-neapolska'          => 'Neapolská pizza',
+    ],
+    'Burgery' => [
+        'burger-tekuty-cheddar'       => 'Burger s tekutým cheddarom',
+        'burger-cierny-s-hranolkami'  => 'Špeciál hovädzí burger',
+        'burgre-cierny-a-cerveny'     => 'Burgery pred pecou',
+        'burgre-pred-pecou'           => 'Burgery z našej kuchyne',
+        'burger-cerveny'              => 'Burger v červenej žemli',
+        'mini-burgre'                 => 'Mini burgery',
+        'burger-1'                    => 'Domáci hovädzí burger',
+        'burger-2'                    => 'Burger s tekvicovými semienkami',
+        'burger-3'                    => 'Domáci burger',
+    ],
+    'Kebab, grill a šaláty' => [
+        'kebab-tanier'                  => 'Kebab tanier',
+        'kebab-v-pizza-chlebe'          => 'Kebab v pizza chlebe',
+        'tortilla-a-stripsy'            => 'Tortilla a kuracie stripsy',
+        'kuracie-stripsy-box'           => 'Kuracie stripsy s hranolkami',
+        'kuraci-gril'                   => 'Kurací gril',
+        'bufala-salat'                  => 'Bufala šalát',
+        'kuraci-salat-granatove-jablko' => 'Kurací šalát s granátovým jablkom',
+        'salaty-v-miske'                => 'Šaláty',
+        'bruschetta'                    => 'Bruschetta',
+        'specialita-cheddar-bbq'        => 'S cheddarom a BBQ omáčkou',
+        'sladke-pizzove-vankusiky'      => 'Sladké pizzové vankúšiky',
+    ],
+    'Párty misy na objednávku' => [
+        'party-misa-1'            => 'Párty misa',
+        'party-misa-2'            => 'Párty misa',
+        'party-misa-3'            => 'Mix Denko',
+        'party-misa-4'            => 'Párty misa',
+        'kuracie-stripsy-etazer'  => 'Kuracie stripsy na etažére',
+    ],
+    'Naše suroviny' => [
+        'talianska-muka'      => 'Talianska múka na neapolskú pizzu',
+        'talianske-suroviny'  => 'Talianske suroviny',
+    ],
+    'Prevádzka' => [
+        'prevadzka-interier' => 'Interiér pizzerie',
+        'terasa'             => 'Terasa',
+        'prevadzka-1'        => 'Interiér',
+        'prevadzka-5'        => 'Interiér',
+        'prevadzka-2'        => 'Vstup',
+        'prevadzka-3'        => 'Sedenie',
+        'prevadzka-4'        => 'Interiér',
+        'prevadzka-vianoce'  => 'Vianoce v pizzerii',
+        'kuchyna'            => 'Kuchyňa',
+        'rozvoz-auto'        => 'Naše rozvozové auto',
+    ],
+    'Akcie a oslavy' => [
+        'nas-tim'                  => 'Náš tím',
+        'detsky-den-1'             => 'Detský deň',
+        'detsky-den-2'             => 'Detský deň',
+        'detsky-den-3'             => 'Detský deň',
+        'detsky-den-cukrova-vata'  => 'Cukrová vata',
+        'detsky-den-4'             => 'Detský deň',
+        'detsky-den-5'             => 'Detský deň',
+        'oslava-1'                 => 'Oslava v pizzerii',
+        'oslava-2'                 => 'Oslava v pizzerii',
+        'mikulas-v-pizzerii'       => 'Mikuláš v pizzerii',
+    ],
 ];
+
+$lightboxPhotos = [];
 ?>
 
 <section class="page-hero page-hero--gallery">
   <div class="container">
-    <p class="eyebrow">Galéria</p>
-    <h1>Pozrite si, čo pripravujeme</h1>
-    <p class="page-hero__lead">Výber fotografií z našej kuchyne a ponuky. Kliknutím na fotku si ju zobrazíte na celú obrazovku. Skutočné fotky prevádzky čoskoro doplníme.</p>
+    <p class="eyebrow"><?= h('Galéria') ?></p>
+    <h1><?= h('Pozrite sa k nám') ?></h1>
+    <p class="page-hero__lead"><?= h('Pizza z pece na drevo, burgery, párty misy, naša prevádzka aj akcie, ktoré u nás organizujeme. Kliknutím na fotku si ju zobrazíte na celú obrazovku.') ?></p>
   </div>
 </section>
 
 <section class="section gallery-section">
   <div class="container">
-    <div class="gallery-grid">
-      <?php foreach ($gallery as $i => $photo): ?>
-      <figure class="gallery-item">
-        <button type="button" class="gallery-item__btn" data-gallery-open data-index="<?= (int) $i ?>" aria-label="Zväčšiť: <?= e($photo['label']) ?>">
-          <img src="<?= e($photo['img']) ?>" alt="<?= e($photo['label']) ?> - Pizzeria Tominno" loading="lazy">
-          <span class="gallery-item__zoom"><?= icon('zoom-in') ?></span>
-        </button>
-        <figcaption><?= e($photo['label']) ?></figcaption>
-      </figure>
-      <?php endforeach; ?>
+
+    <div class="gallery-block">
+      <h2 class="gallery-block__title"><?= h('Videá') ?></h2>
+      <div class="gallery-videos">
+        <figure>
+          <video class="story-video" src="/assets/video/priprava-cesta.mp4" poster="/assets/video/priprava-cesta.jpg" controls muted loop playsinline preload="none"></video>
+          <figcaption><?= h('Takto pripravujeme cesto - fermentované 48 hodín') ?></figcaption>
+        </figure>
+        <figure>
+          <video class="story-video" src="/assets/video/pec-na-drevo.mp4" poster="/assets/video/pec-na-drevo.jpg" controls muted loop playsinline preload="none"></video>
+          <figcaption><?= h('Neapolská pizza v peci na drevo') ?></figcaption>
+        </figure>
+      </div>
     </div>
+
+    <?php foreach ($gallerySections as $sectionTitle => $photos): ?>
+    <div class="gallery-block">
+      <h2 class="gallery-block__title"><?= h($sectionTitle) ?></h2>
+      <div class="gallery-grid">
+        <?php foreach ($photos as $name => $label): ?>
+        <?= galleryFigure($name, $label, $lightboxPhotos) ?>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endforeach; ?>
+
   </div>
 </section>
 
 <section class="cta-band">
   <div class="container cta-band__inner">
     <div>
-      <h2>Chuť je ešte lepšia ako fotky</h2>
-      <p>Presvedčte sa sami - objednajte si u nás ešte dnes.</p>
+      <h2><?= h('Chuť je ešte lepšia ako fotky') ?></h2>
+      <p><?= h('Presvedčte sa sami - zavolajte nám a objednajte si.') ?></p>
     </div>
-    <a href="/objednavka.php" class="btn btn--primary btn--lg">Objednať teraz</a>
+    <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="btn btn--primary btn--lg"><?= icon('phone') ?> <?= e(SITE_PHONE) ?></a>
   </div>
 </section>
 
-<div class="lightbox" id="lightbox" hidden>
-  <div class="lightbox__backdrop" data-lightbox-close></div>
-
-  <button type="button" class="lightbox__close" data-lightbox-close aria-label="Zavrieť"><?= icon('x') ?></button>
-  <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Predchádzajúca fotka"><?= icon('chevron-left') ?></button>
-  <button type="button" class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Ďalšia fotka"><?= icon('chevron-right') ?></button>
-
-  <figure class="lightbox__figure">
-    <img src="" alt="" id="lightboxImage">
-    <figcaption id="lightboxCaption"></figcaption>
-  </figure>
-
-  <p class="lightbox__counter" id="lightboxCounter"></p>
-</div>
-
-<script>
-  window.PT_GALLERY = <?= json_encode(array_map(function ($photo) {
-      return [
-          'full' => str_replace('w=900', 'w=1800', $photo['img']),
-          'label' => $photo['label'],
-      ];
-  }, $gallery), JSON_UNESCAPED_UNICODE) ?>;
-</script>
-<script src="/assets/js/gallery.js"></script>
+<?php require __DIR__ . '/includes/lightbox.php'; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

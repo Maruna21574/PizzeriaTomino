@@ -105,12 +105,10 @@
   .eyebrow {
     color: $color-secondary;
   }
-
-  &--menu::after { background-image: url('https://images.unsplash.com/photo-1600028068383-ea11a7a101f3?auto=format&fit=crop&w=1600&q=80'); }
-  &--about::after { background-image: url('https://images.unsplash.com/photo-1595295333158-4742f28fbd85?auto=format&fit=crop&w=1600&q=80'); }
-  &--gallery::after { background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80'); }
-  &--delivery::after { background-image: url('https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=1600&q=80'); }
-  &--contact::after { background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80'); }
-  &--order::after { background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&q=80'); }
-  &--builder::after { background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1600&q=80'); }
 }
+
+.page-hero--menu::after { background-image: url('/assets/img/foto/pizza-v-peci.jpg'); }
+.page-hero--about::after { background-image: url('/assets/img/foto/prevadzka-interier.jpg'); }
+.page-hero--gallery::after { background-image: url('/assets/img/foto/party-misa-2.jpg'); }
+.page-hero--delivery::after { background-image: url('/assets/img/foto/rozvoz-auto.jpg'); }
+.page-hero--contact::after { background-image: url('/assets/img/foto/terasa.jpg'); }

@@ -125,3 +125,7 @@
     max-height: 62vh;
   }
 }
+
+body.modal-open {
+  overflow: hidden;
+}

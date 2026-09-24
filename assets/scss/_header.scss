@@ -204,7 +204,9 @@
   }
 }
 
-.btn--order-now {
+// Na mobile telefonuje plávajúce tlačidlo (.call-fab). Selektor potrebuje vyššiu
+// špecifickosť, inak ho prebije základné ".btn" z _buttons.scss (importuje sa neskôr).
+.site-header__actions .btn--header-call {
   @include respond($bp-md) {
     display: none;
   }
@@ -242,15 +244,6 @@
     display: flex;
     position: relative;
     z-index: 21;
-  }
-
-  // Tlačidlo košíka v mobilnej hlavičke je zbytočné - keď má košík
-  // položky, zobrazí sa plávajúci mini-košík (pozri _mini-cart.scss).
-  // Selektor musí byť "site-header__actions .btn--cart" (nie len
-  // ".btn--cart") - inak má rovnakú špecifickosť ako základné ".btn"
-  // pravidlo z _buttons.scss, ktoré sa importuje neskôr a vyhráva.
-  .site-header__actions .btn--cart {
-    display: none;
   }
 
   .nav-dropdown__toggle {

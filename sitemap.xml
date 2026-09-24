@@ -1,10 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.pizzeriatominno.sk/index.php</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.pizzeriatominno.sk/menu.php</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.pizzeriatominno.sk/o-nas.php</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.pizzeriatominno.sk/galeria.php</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://www.pizzeriatominno.sk/doprava-a-platba.php</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.pizzeriatominno.sk/objednavka.php</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.pizzeriatominno.sk/kontakt.php</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.pizzeriatominno.sk/</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/"/>
+    <changefreq>weekly</changefreq><priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/menu</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/menu"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/menu"/>
+    <changefreq>weekly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/oslavy-a-akcie</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/oslavy-a-akcie"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/oslavy-a-akcie"/>
+    <changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/o-nas</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/o-nas"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/o-nas"/>
+    <changefreq>monthly</changefreq><priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/galeria</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/galeria"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/galeria"/>
+    <changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/doprava-a-platba</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/doprava-a-platba"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/doprava-a-platba"/>
+    <changefreq>monthly</changefreq><priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/kontakt</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/kontakt"/>
+    <changefreq>monthly</changefreq><priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/ochrana-osobnych-udajov</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/ochrana-osobnych-udajov"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/ochrana-osobnych-udajov"/>
+    <changefreq>yearly</changefreq><priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/"/>
+    <changefreq>weekly</changefreq><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/menu</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/menu"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/menu"/>
+    <changefreq>weekly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/oslavy-a-akcie</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/oslavy-a-akcie"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/oslavy-a-akcie"/>
+    <changefreq>monthly</changefreq><priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/o-nas</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/o-nas"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/o-nas"/>
+    <changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/galeria</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/galeria"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/galeria"/>
+    <changefreq>monthly</changefreq><priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/doprava-a-platba</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/doprava-a-platba"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/doprava-a-platba"/>
+    <changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/kontakt</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/kontakt"/>
+    <changefreq>monthly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.pizzeriatominno.sk/hu/ochrana-osobnych-udajov</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://www.pizzeriatominno.sk/ochrana-osobnych-udajov"/>
+    <xhtml:link rel="alternate" hreflang="hu" href="https://www.pizzeriatominno.sk/hu/ochrana-osobnych-udajov"/>
+    <changefreq>yearly</changefreq><priority>0.2</priority>
+  </url>
 </urlset>

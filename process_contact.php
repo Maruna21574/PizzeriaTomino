@@ -1,45 +1,86 @@
 <?php
 /**
- * Spracovanie všeobecného kontaktného formulára (kontakt.php).
- * Objednávky z košíka spracúva samostatne process_order.php.
+ * Spracovanie formulárov webu - kontaktný formulár (kontakt.php) a dopyt
+ * na oslavu / firemnú akciu (oslavy-a-akcie.php). Ochrana proti spamu
+ * a odoslanie e-mailu sú v includes/forms.php.
+ * Objednávky jedla sa prijímajú iba telefonicky - web online objednávky nemá.
  */
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/forms.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /kontakt.php');
+// Jazyk stránky, z ktorej prišiel formulár - návrat aj hlásenia budú v ňom.
+lang((string) ($_POST['lang'] ?? 'sk'));
+
+$forms = formDefinitions();
+$formId = (string) ($_POST['form'] ?? '');
+$form = $forms[$formId] ?? $forms['kontakt'];
+
+function redirectBack(array $form, string $query): void
+{
+    header('Location: ' . url($form['page']) . '?' . $query . '#formular');
     exit;
 }
 
-// Honeypot proti spamu - skryté pole, ktoré vypĺňajú iba boti.
-if (!empty($_POST['website'])) {
-    header('Location: /kontakt.php?sent=1');
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($forms[$formId])) {
+    header('Location: ' . url($form['page']));
     exit;
 }
 
-$name = trim((string) ($_POST['name'] ?? ''));
-$email = trim((string) ($_POST['email'] ?? ''));
-$phone = trim((string) ($_POST['phone'] ?? ''));
-$message = trim((string) ($_POST['message'] ?? ''));
-
-if ($name === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: /kontakt.php?error=1');
-    exit;
+$spam = antiSpamCheck($formId, $_POST);
+if ($spam === 'spam') {
+    // Robotovi sa tvárime, že všetko prebehlo v poriadku.
+    redirectBack($form, 'sent=1');
+}
+if ($spam !== null) {
+    redirectBack($form, 'error=' . $spam);
 }
 
-$subject = 'Nová správa z kontaktného formulára - ' . SITE_NAME;
-$body = "Meno: {$name}\n";
-$body .= "E-mail: {$email}\n";
-$body .= "Telefón: " . ($phone !== '' ? $phone : '-') . "\n\n";
-$body .= "Správa:\n{$message}\n";
+$name  = formText($_POST, 'name', 100);
+$email = formText($_POST, 'email', 150);
+$phone = formText($_POST, 'phone', 30);
+$message = formText($_POST, 'message', 3000, true);
 
-$headers = [
-    'From: ' . SITE_NAME . ' <noreply@' . preg_replace('/^www\./', '', $_SERVER['HTTP_HOST'] ?? 'pizzeriatominno.sk') . '>',
-    'Reply-To: ' . $email,
-    'Content-Type: text/plain; charset=UTF-8',
-];
+$emailValid = $email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL);
+$phoneValid = $phone !== '' && preg_match('/^[0-9+\s\/()-]{7,20}$/', $phone);
 
-@mail(SITE_EMAIL, $subject, $body, implode("\r\n", $headers));
+if ($formId === 'akcie') {
+    $eventTypes = eventTypes();
+    $eventType = (string) ($_POST['event_type'] ?? '');
+    $date = formText($_POST, 'date', 10);
+    $guests = (int) ($_POST['guests'] ?? 0);
 
-header('Location: /kontakt.php?sent=1');
-exit;
+    // Na dopyt treba meno, telefón (akcie dohadujeme telefonicky) a typ akcie.
+    if ($name === '' || !$phoneValid || ($email !== '' && !$emailValid) || !isset($eventTypes[$eventType])
+        || ($date !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) || $guests < 0 || $guests > 500) {
+        redirectBack($form, 'error=invalid');
+    }
+
+    $body  = "Typ akcie: {$eventTypes[$eventType]}\n";
+    $body .= 'Termín: ' . ($date !== '' ? date('j. n. Y', strtotime($date)) : '-') . "\n";
+    $body .= 'Počet osôb: ' . ($guests > 0 ? $guests : '-') . "\n\n";
+    $body .= "Meno: {$name}\n";
+    $body .= "Telefón: {$phone}\n";
+    $body .= 'E-mail: ' . ($email !== '' ? $email : '-') . "\n\n";
+    $body .= "Poznámka:\n" . ($message !== '' ? $message : '-') . "\n";
+} else {
+    if ($name === '' || $message === '' || !$emailValid || ($phone !== '' && !$phoneValid)) {
+        redirectBack($form, 'error=invalid');
+    }
+
+    $body  = "Meno: {$name}\n";
+    $body .= "E-mail: {$email}\n";
+    $body .= 'Telefón: ' . ($phone !== '' ? $phone : '-') . "\n\n";
+    $body .= "Správa:\n{$message}\n";
+}
+
+if (lang() !== 'sk') {
+    $body .= "\nPozor: správa prišla z maďarskej verzie webu - zákazník zrejme hovorí po maďarsky.\n";
+}
+
+if (!sendSiteMail($form['subject'], $body, $emailValid ? $email : '')) {
+    error_log('Formulár "' . $formId . '": odoslanie e-mailu zlyhalo.');
+    redirectBack($form, 'error=mail');
+}
+
+redirectBack($form, 'sent=1');

@@ -121,3 +121,10 @@ p {
     }
   }
 }
+
+.section__cta--row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
