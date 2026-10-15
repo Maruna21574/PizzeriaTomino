@@ -18,6 +18,12 @@ ErrorDocument 404 /404.php
   RewriteCond %{HTTP_HOST} ^pizzeriatominno\.sk$ [NC]
   RewriteRule ^ https://www.pizzeriatominno.sk%{REQUEST_URI} [L,R=301]
 
+  # Testovacia subdoména: iba presmerovanie http -> https.
+  RewriteCond %{HTTP_HOST} ^tominopizzeria\.clicki\.sk$ [NC]
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+  RewriteRule ^ https://tominopizzeria.clicki.sk%{REQUEST_URI} [L,R=301]
+
   # Online objednávky a "Vlastná pizza" boli zrušené - staré odkazy presmerujeme na menu.
   RewriteRule ^(objednavka|vlastna-pizza|dakujeme)(\.php)?$ /menu [R=301,L]
 
