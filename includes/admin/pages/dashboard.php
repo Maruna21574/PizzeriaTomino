@@ -18,8 +18,8 @@ $warnings = [];
 if (adminUsesInitialPassword()) {
     $warnings[] = ['Používate počiatočné heslo. Zmeňte si ho.', 'password'];
 }
-if ($settings['company_name'] === '' || $settings['company_ico'] === '') {
-    $warnings[] = ['Chýbajú údaje o prevádzkovateľovi (obchodné meno, IČO) - zobrazujú sa na stránke Ochrana osobných údajov.', 'settings'];
+if ($settings['company_name'] === '') {
+    $warnings[] = ['Chýbajú údaje o prevádzkovateľovi (obchodné meno, sídlo) - zobrazujú sa na stránke Ochrana osobných údajov.', 'settings'];
 }
 if ($settings['google_review_url'] === '') {
     $warnings[] = ['Nie je vyplnený odkaz na napísanie recenzie na Google.', 'reviews'];

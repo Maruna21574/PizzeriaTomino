@@ -1,0 +1,348 @@
+// Cookie lišta (includes/cookies.php, assets/js/cookies.js)
+
+.cookie-banner {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 400;
+  width: min(440px, calc(100% - 40px));
+  padding: 22px 24px;
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity $transition-base, transform $transition-base;
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+  }
+
+  &__text {
+    margin: 0 0 16px;
+    font-size: 0.86rem;
+    color: $color-muted;
+
+    a {
+      color: $color-primary;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .btn {
+      flex: 1 1 auto;
+    }
+  }
+
+  @include respond($bp-sm) {
+    left: 12px;
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 18px;
+  }
+}
+
+// Tlačidlo na opätovné otvorenie nastavení (vľavo dole, call-fab je vpravo)
+.cookie-revisit {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 110;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid $color-border;
+  border-radius: 50%;
+  background: $color-white;
+  color: $color-primary;
+  box-shadow: $shadow-md;
+  cursor: pointer;
+  transition: transform $transition-base;
+
+  &:hover {
+    transform: scale(1.06);
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.cookie-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 410;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity $transition-base;
+
+  &.is-visible {
+    opacity: 1;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(36, 26, 21, 0.55);
+  }
+
+  &__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(640px, 100%);
+    max-height: calc(100vh - 32px);
+    background: $color-white;
+    border-radius: $radius-md;
+    box-shadow: $shadow-lg;
+    overflow: hidden;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid $color-border;
+
+    h2 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+  }
+
+  &__close {
+    display: flex;
+    padding: 6px;
+    border: 0;
+    background: none;
+    color: $color-muted;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  &__body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    font-size: 0.88rem;
+
+    p {
+      font-size: 0.88rem;
+      color: $color-muted;
+    }
+  }
+
+  &__note {
+    margin: 4px 0 0;
+  }
+
+  &__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 14px 24px;
+    border-top: 1px solid $color-border;
+    background: $color-cream-alt;
+  }
+
+  @include respond($bp-sm) {
+    &__head,
+    &__body,
+    &__foot {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    &__foot .btn {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+body.cookie-modal-open {
+  overflow: hidden;
+}
+
+.cookie-cat {
+  margin-bottom: 14px;
+  padding: 16px;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+
+    h3 {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+  }
+
+  &__always {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: $color-success;
+    white-space: nowrap;
+  }
+
+  &__table {
+    width: 100%;
+    margin-top: 8px;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+
+    th,
+    td {
+      padding: 6px 8px;
+      text-align: left;
+      border-top: 1px solid $color-border;
+      color: $color-muted;
+    }
+
+    th {
+      color: $color-text;
+      font-weight: 600;
+    }
+  }
+}
+
+// Prepínač (toggle)
+.cookie-switch {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 46px;
+  height: 26px;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  &__track {
+    position: absolute;
+    inset: 0;
+    border-radius: $radius-pill;
+    background: #cfc4ba;
+    transition: background $transition-base;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $color-white;
+      box-shadow: $shadow-sm;
+      transition: transform $transition-base;
+    }
+  }
+
+  input:checked + &__track {
+    background: $color-primary;
+
+    &::after {
+      transform: translateX(20px);
+    }
+  }
+
+  input:focus-visible + &__track {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Mapa (externý obsah) zablokovaná do súhlasu
+.consent-embed {
+  background: $color-cream-alt;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 280px;
+    padding: 24px;
+    text-align: center;
+
+    p {
+      margin: 0;
+      max-width: 340px;
+      font-size: 0.88rem;
+      color: $color-muted;
+    }
+  }
+
+  &--loaded &__inner {
+    display: none;
+  }
+}
+
+.footer-link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-secondary;
+  }
+}

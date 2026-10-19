@@ -1,7 +1,13 @@
 <?php /* Text stránky Ochrana osobných údajov - slovensky. Vkladá ochrana-osobnych-udajov.php. */ ?>
 <h2>1. Prevádzkovateľ</h2>
-<p>Prevádzkovateľom osobných údajov je <?= companyField(COMPANY_NAME, 'obchodné meno prevádzkovateľa') ?>, so sídlom <?= companyField(COMPANY_ADDRESS, 'adresa sídla') ?>, IČO: <?= companyField(COMPANY_ICO, 'IČO') ?>, prevádzka <?= e(SITE_NAME) ?>, <?= e(SITE_ADDRESS_FULL) ?> (ďalej len „my“).</p>
-<p>Kontakt vo veciach ochrany osobných údajov: <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a>, tel. <a href="tel:<?= e(SITE_PHONE_TEL) ?>"><?= e(SITE_PHONE) ?></a>.</p>
+<p>Prevádzkovateľom osobných údajov je <?= companyField(COMPANY_NAME, 'obchodné meno prevádzkovateľa') ?>, so sídlom <?= companyField(COMPANY_ADDRESS, 'adresa sídla') ?> (ďalej len „my“).</p>
+<p>Kontakt vo veciach ochrany osobných údajov a údaje o prevádzke:</p>
+<ul>
+  <li><strong>Adresa:</strong> <?= e(SITE_ADDRESS_STREET) ?>, <?= e(SITE_ADDRESS_CITY) ?></li>
+  <li><strong>Telefón:</strong> <a href="tel:<?= e(SITE_PHONE_TEL) ?>"><?= e(SITE_PHONE) ?></a></li>
+  <li><strong>E-mail:</strong> <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a></li>
+  <li><strong>Otváracie hodiny:</strong> <?= e(openingHoursSummary()) ?></li>
+</ul>
 
 <h2>2. Aké údaje spracúvame a prečo</h2>
 <h3>Kontaktný formulár</h3>
@@ -26,11 +32,12 @@
 <p>Vaše údaje nepredávame ani neposkytujeme tretím stranám na marketing. Prístup k nim môžu mať iba naši zamestnanci a kuriér (pri rozvoze) a poskytovateľ webhostingu a e-mailu, ktorý pre nás zabezpečuje technickú prevádzku webu. Údaje neprenášame mimo Európskej únie.</p>
 
 <h2>5. Cookies a služby tretích strán</h2>
-<p>Náš web sám nepoužíva sledovacie ani reklamné cookies. Na stránkach používame tieto služby tretích strán:</p>
+<p>Náš web sám nepoužíva sledovacie ani reklamné cookies. Ukladáme iba jedno nevyhnutné cookie <strong>pt_consent</strong> (12 mesiacov), v ktorom je zapamätaný váš výber v cookie lište. Na stránkach používame tieto služby tretích strán:</p>
 <ul class="check-list">
   <li><strong>Google Fonts</strong> - písma webu sa načítavajú zo serverov Google, ktoré pritom môžu spracovať vašu IP adresu.</li>
-  <li><strong>Mapy Google</strong> - mapa na stránke Kontakt je vložená zo služby Google Maps, ktorá môže ukladať vlastné cookies. Podrobnosti nájdete v <a href="https://policies.google.com/privacy?hl=sk" target="_blank" rel="noopener">zásadách ochrany súkromia Google</a>.</li>
+  <li><strong>Mapy Google</strong> - mapa na stránke Kontakt je vložená zo služby Google Maps, ktorá môže ukladať vlastné cookies. Mapa sa načíta až po vašom súhlase v cookie lište. Podrobnosti nájdete v <a href="https://policies.google.com/privacy?hl=sk" target="_blank" rel="noopener">zásadách ochrany súkromia Google</a>.</li>
 </ul>
+<p>Svoj výber môžete kedykoľvek zmeniť tlačidlom s cookie v rohu stránky alebo odkazom „Nastavenia cookies“ v pätičke.</p>
 
 <h2>6. Vaše práva</h2>
 <p>Máte právo požadovať prístup k svojim osobným údajom, ich opravu alebo vymazanie, obmedzenie spracúvania, prenosnosť údajov a namietať proti spracúvaniu založenému na oprávnenom záujme. Stačí nám napísať na <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a>.</p>

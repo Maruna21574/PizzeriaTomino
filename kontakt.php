@@ -4,6 +4,7 @@ $pageDescription = 'Kontaktujte Pizzeria Tominno - Hlavná 26, 076 02 Novosad. T
 $bodyClass = 'page-contact';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/forms.php';
+require_once __DIR__ . '/includes/cookies.php';
 
 $mapsSearchUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode(SITE_NAME . ', ' . SITE_ADDRESS_FULL);
 ?>
@@ -50,14 +51,7 @@ $mapsSearchUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode(
       </div>
 
       <div class="contact-map">
-        <iframe
-          title="<?= h('Mapa') ?> - Pizzeria Tominno"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5460.324055378588!2d21.740868100000004!3d48.5250816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4738d500190a7d89%3A0xd9fb219463137a79!2sPizzeriaTominno!5e1!3m2!1ssk!2ssk!4v1787941230517!5m2!1ssk!2ssk"
-          style="border:0;"
-          allowfullscreen
-          loading="lazy"
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+        <?= consentEmbed('external', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5460.324055378588!2d21.740868100000004!3d48.5250816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4738d500190a7d89%3A0xd9fb219463137a79!2sPizzeriaTominno!5e1!3m2!1ssk!2ssk!4v1787941230517!5m2!1ssk!2ssk', t('Mapa') . ' - Pizzeria Tominno', t('Mapa sa načíta zo služby Google Maps, ktorá môže ukladať cookies. Zobrazí sa po vašom súhlase.')) ?>
         <a class="map-link" href="<?= e($mapsSearchUrl) ?>" target="_blank" rel="noopener"><?= h('Otvoriť veľkú mapu') ?> <?= icon('external-link', 'icon icon--sm') ?></a>
       </div>
     </div>

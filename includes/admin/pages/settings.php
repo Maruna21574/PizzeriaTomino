@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Prevádzkovateľ
-    foreach (['company_name' => 120, 'company_address' => 200, 'company_ico' => 20] as $field => $max) {
+    foreach (['company_name' => 120, 'company_address' => 200] as $field => $max) {
         $settings[$field] = postText($field, $max);
     }
 
@@ -203,7 +203,6 @@ adminHeader('Nastavenia', 'settings');
     <div class="admin-grid admin-grid--3">
       <div class="admin-field"><label for="company_name">Obchodné meno</label><input type="text" id="company_name" name="company_name" value="<?= e($settings['company_name']) ?>" placeholder="napr. Tominno s.r.o."></div>
       <div class="admin-field"><label for="company_address">Sídlo</label><input type="text" id="company_address" name="company_address" value="<?= e($settings['company_address']) ?>"></div>
-      <div class="admin-field"><label for="company_ico">IČO</label><input type="text" id="company_ico" name="company_ico" value="<?= e($settings['company_ico']) ?>"></div>
     </div>
   </section>
 

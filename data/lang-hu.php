@@ -559,4 +559,42 @@ return [
     'Zdá sa, že táto stránka neexistuje alebo bola presunutá. Skúste sa vrátiť na domovskú stránku alebo si pozrite naše menu.' => 'Úgy tűnik, ez az oldal nem létezik vagy áthelyezték. Térjen vissza a főoldalra, vagy nézze meg az étlapunkat.',
     'Zobraziť menu' => 'Étlap megtekintése',
 
+
+    // ------------------------------------------------------------------ E-mail s potvrdením pre zákazníka (includes/mail.php)
+    'Ďakujeme za vašu správu' => 'Köszönjük üzenetét',
+    'Dobrý deň,' => 'Üdvözöljük!',
+    'ďakujeme, že ste nás kontaktovali. Vašu správu sme prijali a ozveme sa vám čo najskôr.' => 'köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, és hamarosan válaszolunk.',
+    'Ak je vec naliehavá, zavolajte nám:' => 'Ha sürgős, kérjük, hívjon minket:',
+    'Túto správu ste dostali, pretože ste vyplnili formulár na našom webe. Ak ste ho nevyplnili vy, tento e-mail môžete ignorovať.' => 'Ezt az üzenetet azért kapta, mert kitöltötte az űrlapot a weboldalunkon. Ha nem Ön töltötte ki, nyugodtan figyelmen kívül hagyhatja ezt az e-mailt.',
+    'Zhrnutie vášho dopytu' => 'Érdeklődésének összefoglalója',
+    'Typ akcie' => 'Rendezvény típusa',
+    'Termín' => 'Időpont',
+
+
+    // ------------------------------------------------------------------ Cookie lišta (includes/cookies.php)
+    'Používame cookies' => 'Sütiket használunk',
+    'Na zobrazenie mapy používame službu tretej strany (Mapy Google), ktorá môže ukladať cookies. Sledovacie ani reklamné cookies nepoužívame. Môžete ich povoliť, odmietnuť alebo si výber prispôsobiť.' => 'A térkép megjelenítéséhez harmadik fél szolgáltatását (Google Térkép) használjuk, amely sütiket tárolhat. Követő vagy hirdetési sütiket nem használunk. Engedélyezheti, elutasíthatja, vagy testre szabhatja a választást.',
+    'Prispôsobiť' => 'Testreszabás',
+    'Odmietnuť všetko' => 'Összes elutasítása',
+    'Prijať všetko' => 'Összes elfogadása',
+    'Nastavenia cookies' => 'Süti-beállítások',
+    'Tu si môžete vybrať, ktoré cookies a služby tretích strán povolíte. Výber môžete kedykoľvek zmeniť cez tlačidlo s cookie v rohu stránky alebo odkaz v pätičke.' => 'Itt kiválaszthatja, mely sütiket és harmadik fél szolgáltatásait engedélyezi. Választását bármikor módosíthatja az oldal sarkában lévő süti gombbal vagy a láblécben található hivatkozással.',
+    'Vždy aktívne' => 'Mindig aktív',
+    'Cookie' => 'Süti',
+    'Platnosť' => 'Érvényesség',
+    'Účel' => 'Cél',
+    'Uložiť moje preferencie' => 'Beállításaim mentése',
+    'Analytické ani reklamné cookies na tomto webe nepoužívame.' => 'Ezen a weboldalon nem használunk analitikai és hirdetési sütiket.',
+    'Nevyhnutné' => 'Szükséges',
+    'Tieto cookies sú potrebné na základné fungovanie webu. Ukladajú napríklad váš výber v tejto lište, aby sme sa vás nepýtali pri každej návšteve. Nedajú sa vypnúť a neidentifikujú vás.' => 'Ezek a sütik az oldal alapvető működéséhez szükségesek. Például elmentik a választását ebben a sávban, hogy ne kérdezzünk rá minden látogatáskor. Nem kapcsolhatók ki, és nem azonosítják Önt.',
+    '12 mesiacov' => '12 hónap',
+    'Uloženie vášho výberu cookies' => 'A süti-választás elmentése',
+    'Externý obsah (Mapy Google)' => 'Külső tartalom (Google Térkép)',
+    'Mapa na stránke Kontakt sa načíta zo služby Google Maps. Google pritom môže spracovať vašu IP adresu a ukladať vlastné cookies. Bez súhlasu sa mapa nezobrazí - ostane odkaz na otvorenie v Mapách Google.' => 'A Kapcsolat oldalon a térkép a Google Maps szolgáltatásból töltődik be. A Google ilyenkor feldolgozhatja az IP-címét és saját sütiket tárolhat. Hozzájárulás nélkül a térkép nem jelenik meg - marad a Google Térképen való megnyitás hivatkozása.',
+    'Google (tretia strana)' => 'Google (harmadik fél)',
+    'podľa Google' => 'a Google szerint',
+    'Zobrazenie vloženej mapy' => 'A beágyazott térkép megjelenítése',
+    'Povoliť a zobraziť mapu' => 'Engedélyezés és a térkép megjelenítése',
+    'Mapa sa načíta zo služby Google Maps, ktorá môže ukladať cookies. Zobrazí sa po vašom súhlase.' => 'A térkép a Google Maps szolgáltatásból töltődik be, amely sütiket tárolhat. Hozzájárulása után jelenik meg.',
+
 ];

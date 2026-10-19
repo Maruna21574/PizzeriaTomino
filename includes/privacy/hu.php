@@ -1,7 +1,13 @@
 <?php /* Text stránky Ochrana osobných údajov - maďarsky (Adatvédelmi tájékoztató). Vkladá ochrana-osobnych-udajov.php. */ ?>
 <h2>1. Adatkezelő</h2>
-<p>A személyes adatok kezelője: <?= companyField(COMPANY_NAME, 'az adatkezelő cégneve') ?>, székhely: <?= companyField(COMPANY_ADDRESS, 'székhely címe') ?>, cégazonosító szám (IČO): <?= companyField(COMPANY_ICO, 'IČO') ?>, üzlet: <?= e(SITE_NAME) ?>, <?= e(SITE_ADDRESS_FULL) ?> (a továbbiakban „mi”).</p>
-<p>Elérhetőség adatvédelmi ügyekben: <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a>, tel. <a href="tel:<?= e(SITE_PHONE_TEL) ?>"><?= e(SITE_PHONE) ?></a>.</p>
+<p>A személyes adatok kezelője: <?= companyField(COMPANY_NAME, 'az adatkezelő cégneve') ?>, székhely: <?= companyField(COMPANY_ADDRESS, 'székhely címe') ?> (a továbbiakban „mi”).</p>
+<p>Elérhetőség adatvédelmi ügyekben és az üzlet adatai:</p>
+<ul>
+  <li><strong>Cím:</strong> <?= e(SITE_ADDRESS_STREET) ?>, <?= e(SITE_ADDRESS_CITY) ?></li>
+  <li><strong>Telefon:</strong> <a href="tel:<?= e(SITE_PHONE_TEL) ?>"><?= e(SITE_PHONE) ?></a></li>
+  <li><strong>E-mail:</strong> <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a></li>
+  <li><strong>Nyitvatartás:</strong> <?= e(openingHoursSummary()) ?></li>
+</ul>
 
 <h2>2. Milyen adatokat kezelünk és miért</h2>
 <h3>Kapcsolatfelvételi űrlap</h3>
@@ -26,11 +32,12 @@
 <p>Adatait nem adjuk el, és marketing céljából nem adjuk át harmadik félnek. Hozzáférhetnek alkalmazottaink és a futár (kiszállításkor), valamint a tárhely- és e-mail-szolgáltató, amely a weboldal technikai működését biztosítja. Adatait nem továbbítjuk az Európai Unión kívülre.</p>
 
 <h2>5. Sütik és harmadik fél szolgáltatásai</h2>
-<p>Weboldalunk maga nem használ követő vagy reklámcélú sütiket. Az oldalakon a következő harmadik féltől származó szolgáltatásokat használjuk:</p>
+<p>Weboldalunk maga nem használ követő vagy reklámcélú sütiket. Csak egyetlen szükséges sütit tárolunk, a <strong>pt_consent</strong>-et (12 hónap), amely megjegyzi a süti-sávban tett választását. Az oldalakon a következő harmadik féltől származó szolgáltatásokat használjuk:</p>
 <ul class="check-list">
   <li><strong>Google Fonts</strong> - a weboldal betűtípusai a Google szervereiről töltődnek be, amelyek ennek során kezelhetik az IP-címét.</li>
-  <li><strong>Google Térkép</strong> - a Kapcsolat oldalon lévő térkép a Google Maps szolgáltatásból van beágyazva, amely saját sütiket tárolhat. Részletek a <a href="https://policies.google.com/privacy?hl=hu" target="_blank" rel="noopener">Google adatvédelmi irányelveiben</a>.</li>
+  <li><strong>Google Térkép</strong> - a Kapcsolat oldalon lévő térkép a Google Maps szolgáltatásból van beágyazva, amely saját sütiket tárolhat. A térkép csak a süti-sávban adott hozzájárulása után töltődik be. Részletek a <a href="https://policies.google.com/privacy?hl=hu" target="_blank" rel="noopener">Google adatvédelmi irányelveiben</a>.</li>
 </ul>
+<p>Választását bármikor módosíthatja az oldal sarkában lévő süti gombbal vagy a láblécben található „Süti-beállítások” hivatkozással.</p>
 
 <h2>6. Az Ön jogai</h2>
 <p>Joga van hozzáférést kérni személyes adataihoz, kérni azok helyesbítését vagy törlését, az adatkezelés korlátozását, az adathordozhatóságot, valamint tiltakozni a jogos érdeken alapuló adatkezelés ellen. Elég, ha ír nekünk a <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a> címre.</p>

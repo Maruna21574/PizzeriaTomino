@@ -53,6 +53,7 @@ function icon(string $name, string $class = 'icon'): string
         'chevron-left' => '<polyline points="15 18 9 12 15 6"/>',
         'chevron-right' => '<polyline points="9 18 15 12 9 6"/>',
         'zoom-in' => '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>',
+        'cookie' => '<path d="M21 12.5A9 9 0 1 1 11.5 3a4 4 0 0 0 5 5 4 4 0 0 0 4.5 4.5z"/><circle cx="8.5" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="12.5" cy="15.5" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="11.5" r="0.9" fill="currentColor" stroke="none"/><circle cx="8" cy="15" r="0.8" fill="currentColor" stroke="none"/>',
     ];
 
     if (!isset($line[$name])) {

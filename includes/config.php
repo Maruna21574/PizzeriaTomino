@@ -75,9 +75,8 @@ function defaultSettings(): array
         'social_instagram' => '',
 
         // Prevádzkovateľ - povinné údaje pre stránku o ochrane osobných údajov.
-        'company_name'    => '',
-        'company_address' => '',
-        'company_ico'     => '',
+        'company_name'    => 'Pizzeria Tominno',
+        'company_address' => 'Hlavná 26, 076 02 Novosad',
     ];
 }
 
@@ -113,7 +112,6 @@ define('SITE_ADDRESS_FULL', $settings['address_street'] . ', ' . SITE_ADDRESS_CI
 
 define('COMPANY_NAME', $settings['company_name']);
 define('COMPANY_ADDRESS', $settings['company_address']);
-define('COMPANY_ICO', $settings['company_ico']);
 
 define('OPENING_HOURS', $settings['opening_hours']);
 

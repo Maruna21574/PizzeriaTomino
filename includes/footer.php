@@ -46,7 +46,7 @@ require_once __DIR__ . '/icons.php';
 
   <div class="footer-bottom">
     <div class="container footer-bottom__inner">
-      <p>&copy; <?= date('Y') ?> <?= e(SITE_NAME) ?>. <?= h('Všetky práva vyhradené.') ?> · <a href="<?= e(url('/ochrana-osobnych-udajov')) ?>"><?= h('Ochrana osobných údajov') ?></a></p>
+      <p>&copy; <?= date('Y') ?> <?= e(SITE_NAME) ?>. <?= h('Všetky práva vyhradené.') ?> · <a href="<?= e(url('/ochrana-osobnych-udajov')) ?>"><?= h('Ochrana osobných údajov') ?></a> · <button type="button" class="footer-link-btn" data-cookie-settings><?= h('Nastavenia cookies') ?></button></p>
       <p><?= h('Rozvoz: %s · Objednávky telefonicky · Platba hotovosť / karta', e(deliveryArea())) ?></p>
     </div>
   </div>
@@ -54,6 +54,9 @@ require_once __DIR__ . '/icons.php';
 
 <a href="tel:<?= e(SITE_PHONE_TEL) ?>" class="call-fab" aria-label="<?= h('Zavolať pizzeriu') ?>"><?= icon('phone') ?></a>
 
+<?php require_once __DIR__ . '/cookies.php'; echo cookieBanner(); ?>
+
 <script src="/assets/js/main.js?v=<?= filemtime(__DIR__ . '/../assets/js/main.js') ?>"></script>
+<script src="/assets/js/cookies.js?v=<?= filemtime(__DIR__ . '/../assets/js/cookies.js') ?>"></script>
 </body>
 </html>
