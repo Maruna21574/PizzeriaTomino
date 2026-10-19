@@ -70,7 +70,10 @@ function mailLayout(string $title, string $contentHtml, string $footerHtml, stri
         . '<span style="display:none;max-height:0;overflow:hidden;opacity:0;">' . e($preheader) . '</span>'
         . '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4efe8;padding:24px 12px;"><tr><td align="center">'
         . '<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;">'
-        . '<tr><td style="background:' . $color . ';padding:20px 28px;color:#ffffff;font-size:22px;font-weight:bold;">' . e(SITE_NAME) . '</td></tr>'
+        . '<tr><td style="background:' . $color . ';padding:18px 28px;color:#ffffff;font-size:22px;font-weight:bold;">'
+        . '<a href="' . e(SITE_URL) . '" style="color:#ffffff;text-decoration:none;">'
+        . '<img src="' . e(SITE_URL) . '/assets/img/logo_tomino_w.png" alt="' . e(SITE_NAME) . '" width="180" height="58" style="display:block;border:0;width:180px;height:auto;color:#ffffff;font-size:22px;font-weight:bold;">'
+        . '</a></td></tr>'
         . '<tr><td style="padding:28px;font-size:15px;line-height:1.6;">' . $contentHtml . '</td></tr>'
         . '<tr><td style="padding:16px 28px;background:#faf6f0;color:#7a6f66;font-size:12px;line-height:1.5;">' . $footerHtml . '</td></tr>'
         . '</table></td></tr></table></body></html>';
