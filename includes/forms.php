@@ -9,13 +9,20 @@
  *     rýchlejšie než FORM_MIN_SECONDS (robot), s neplatným podpisom
  *     (podvrhnutý formulár) alebo po FORM_MAX_AGE (starý) sa odmietne.
  *  3. Limit odoslaní - najviac FORM_RATE_LIMIT správ za hodinu z jednej IP.
- *  4. Kontrola obsahu - priveľa odkazov, odkaz v mene, príliš dlhé texty.
+ *  4. Kontrola obsahu - priveľa odkazov, odkaz v mene, texty v cudzích
+ *     písmach (cyrilika, čínština...), ktoré tu nikto nepíše.
+ *  5. Rovnaká správa sa neprijme dvakrát (duplicitné odoslanie / robot).
+ *  6. Potvrdenie zákazníkovi sa pošle najviac FORM_RECIPIENT_LIMIT-krát za
+ *     hodinu na jednu adresu a celý web odošle najviac FORM_DAILY_LIMIT správ
+ *     denne - formulár sa tak nedá zneužiť na zasypanie cudzej schránky.
  */
 
 const FORM_MIN_SECONDS = 3;
 const FORM_MAX_AGE = 4 * 3600;
 const FORM_RATE_LIMIT = 5;
 const FORM_MAX_LINKS = 2;
+const FORM_DAILY_LIMIT = 150;
+const FORM_RECIPIENT_LIMIT = 2;
 
 /** Formuláre webu: kam sa vracia návštevník a predmet e-mailu. */
 function formDefinitions(): array
@@ -115,6 +122,10 @@ function antiSpamCheck(string $formId, array $post): ?string
         return 'spam';
     }
 
+    if (preg_match_all('/[\p{Cyrillic}\p{Han}\p{Arabic}\p{Hangul}\p{Thai}\p{Hebrew}]/u', $text) >= 5) {
+        return 'spam';
+    }
+
     if (rateLimitExceeded()) {
         return 'ratelimit';
     }
@@ -162,19 +173,35 @@ function formText(array $post, string $key, int $maxLength, bool $multiline = fa
     return function_exists('mb_substr') ? mb_substr($value, 0, $maxLength, 'UTF-8') : substr($value, 0, $maxLength);
 }
 
-/** Odošle e-mail prevádzke (predmet s diakritikou je správne zakódovaný). */
-function sendSiteMail(string $subject, string $body, string $replyTo = ''): bool
+/**
+ * Počítadlo pre kľúč $key (adresa, "denne"...): zaznamená zásah a vráti true,
+ * ak ich je v okne $window sekúnd už $max alebo viac. Záznamy sú v storage/.
+ */
+function bucketExceeded(string $key, int $max, int $window): bool
 {
-    $headers = [
-        'MIME-Version: 1.0',
-        'From: ' . SITE_NAME . ' <noreply@' . SITE_DOMAIN . '>',
-        'Content-Type: text/plain; charset=UTF-8',
-        'Content-Transfer-Encoding: 8bit',
-    ];
-    if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
-        $headers[] = 'Reply-To: ' . $replyTo;
+    $dir = storagePath('ratelimit');
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
     }
-    return mail(SITE_EMAIL, encodeMailHeader($subject . ' - ' . SITE_NAME), $body, implode("\r\n", $headers));
+    $file = $dir . '/bucket-' . hash('sha256', $key . formSecret()) . '.json';
+
+    $now = time();
+    $hits = is_file($file) ? (array) json_decode((string) file_get_contents($file), true) : [];
+    $hits = array_values(array_filter($hits, function ($t) use ($now, $window) {
+        return is_int($t) && $t > $now - $window;
+    }));
+    if (count($hits) >= $max) {
+        return true;
+    }
+    $hits[] = $now;
+    @file_put_contents($file, json_encode($hits), LOCK_EX);
+    return false;
+}
+
+/** Prijala sa už rovnaká správa (formulár + meno, e-mail, telefón, text) za poslednú hodinu? */
+function isDuplicateSubmission(string $formId, array $fields): bool
+{
+    return bucketExceeded('dup|' . $formId . '|' . mb_strtolower(implode('|', $fields), 'UTF-8'), 1, 3600);
 }
 
 /** Hlásenie nad formulárom podľa výsledku odoslania (?sent=1 / ?error=...). */

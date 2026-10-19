@@ -1,13 +1,14 @@
 <?php
 /**
  * Spracovanie formulárov webu - kontaktný formulár (kontakt.php) a dopyt
- * na oslavu / firemnú akciu (oslavy-a-akcie.php). Ochrana proti spamu
- * a odoslanie e-mailu sú v includes/forms.php.
+ * na oslavu / firemnú akciu (oslavy-a-akcie.php). Ochrana proti spamu je
+ * v includes/forms.php, odosielanie e-mailov a ich šablóny v includes/mail.php.
  * Objednávky jedla sa prijímajú iba telefonicky - web online objednávky nemá.
  */
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/forms.php';
+require_once __DIR__ . '/includes/mail.php';
 
 // Jazyk stránky, z ktorej prišiel formulár - návrat aj hlásenia budú v ňom.
 lang((string) ($_POST['lang'] ?? 'sk'));
@@ -44,6 +45,7 @@ $message = formText($_POST, 'message', 3000, true);
 $emailValid = $email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL);
 $phoneValid = $phone !== '' && preg_match('/^[0-9+\s\/()-]{7,20}$/', $phone);
 
+$summary = [];   // zhrnutie dopytu pre potvrdenie zákazníkovi
 if ($formId === 'akcie') {
     $eventTypes = eventTypes();
     $eventType = (string) ($_POST['event_type'] ?? '');
@@ -56,31 +58,55 @@ if ($formId === 'akcie') {
         redirectBack($form, 'error=invalid');
     }
 
-    $body  = "Typ akcie: {$eventTypes[$eventType]}\n";
-    $body .= 'Termín: ' . ($date !== '' ? date('j. n. Y', strtotime($date)) : '-') . "\n";
-    $body .= 'Počet osôb: ' . ($guests > 0 ? $guests : '-') . "\n\n";
-    $body .= "Meno: {$name}\n";
-    $body .= "Telefón: {$phone}\n";
-    $body .= 'E-mail: ' . ($email !== '' ? $email : '-') . "\n\n";
-    $body .= "Poznámka:\n" . ($message !== '' ? $message : '-') . "\n";
+    $rows = [
+        'Typ akcie' => $eventTypes[$eventType],
+        'Termín' => $date !== '' ? date('j. n. Y', strtotime($date)) : '-',
+        'Počet osôb' => $guests > 0 ? (string) $guests : '-',
+        'Meno' => $name,
+        'Telefón' => $phone,
+        'E-mail' => $email !== '' ? $email : '-',
+    ];
+    $summary = [
+        t('Typ akcie') => t($eventTypes[$eventType]),
+        t('Termín') => $rows['Termín'],
+        t('Počet osôb') => $rows['Počet osôb'],
+    ];
 } else {
     if ($name === '' || $message === '' || !$emailValid || ($phone !== '' && !$phoneValid)) {
         redirectBack($form, 'error=invalid');
     }
 
-    $body  = "Meno: {$name}\n";
-    $body .= "E-mail: {$email}\n";
-    $body .= 'Telefón: ' . ($phone !== '' ? $phone : '-') . "\n\n";
-    $body .= "Správa:\n{$message}\n";
+    $rows = [
+        'Meno' => $name,
+        'E-mail' => $email,
+        'Telefón' => $phone !== '' ? $phone : '-',
+    ];
 }
 
-if (lang() !== 'sk') {
-    $body .= "\nPozor: správa prišla z maďarskej verzie webu - zákazník zrejme hovorí po maďarsky.\n";
+// Tá istá správa dvakrát (dvojklik, robot) - zákazníkovi sa tvárime, že prešla.
+if (isDuplicateSubmission($formId, [$name, $email, $phone, $message])) {
+    redirectBack($form, 'sent=1');
+}
+// Denný strop správ z celého webu (ochrana pred zaplavením schránky).
+if (bucketExceeded('daily', FORM_DAILY_LIMIT, 86400)) {
+    error_log('Formulár "' . $formId . '": prekročený denný limit správ.');
+    redirectBack($form, 'error=mail');
 }
 
-if (!sendSiteMail($form['subject'], $body, $emailValid ? $email : '')) {
+[$html, $text] = adminMailContent($form['subject'], $rows, $message, $emailValid ? $email : '', $phoneValid ? $phone : '');
+$subject = $form['subject'] . ' - ' . $name;
+if (!sendMail(SITE_EMAIL, $subject, $html, $text, $emailValid ? $email : '')) {
     error_log('Formulár "' . $formId . '": odoslanie e-mailu zlyhalo.');
     redirectBack($form, 'error=mail');
+}
+
+// Potvrdenie zákazníkovi (ak zadal e-mail) - najviac FORM_RECIPIENT_LIMIT za hodinu na adresu.
+// Zlyhanie potvrdenia správu neruší, prevádzka ju už má.
+if ($emailValid && !bucketExceeded('to|' . strtolower($email), FORM_RECIPIENT_LIMIT, 3600)) {
+    [$customerSubject, $customerHtml, $customerText] = customerMailContent($summary);
+    if (!sendMail($email, $customerSubject, $customerHtml, $customerText, SITE_EMAIL)) {
+        error_log('Formulár "' . $formId . '": potvrdenie zákazníkovi sa nepodarilo odoslať.');
+    }
 }
 
 redirectBack($form, 'sent=1');

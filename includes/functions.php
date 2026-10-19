@@ -264,12 +264,6 @@ function restaurantSchema(): string
     return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG);
 }
 
-/** Zakóduje hlavičku e-mailu s diakritikou (RFC 2047), aby sa nerozsypala. */
-function encodeMailHeader(string $value): string
-{
-    return '=?UTF-8?B?' . base64_encode($value) . '?=';
-}
-
 /**
  * Fotka v mriežke galérie, ktorá sa po kliknutí otvorí v lightboxe
  * (includes/lightbox.php). Fotku zároveň pridá do $lightboxPhotos.
